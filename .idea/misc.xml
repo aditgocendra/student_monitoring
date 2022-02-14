@@ -3,7 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/background_border_input.xml" value="0.139" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/background_button_pill.xml" value="0.2235" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/cursor_input_color.xml" value="0.138" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_email.xml" value="0.139" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_key_pass.xml" value="0.139" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_person.xml" value="0.2235" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_forgot_password.xml" value="0.33" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_home_app.xml" value="0.18" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_main.xml" value="0.29322916666666665" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_sign_in.xml" value="0.22" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_sign_up.xml" value="0.24898785425101214" />
       </map>
     </option>
   </component>
