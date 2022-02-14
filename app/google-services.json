@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "309523790372",
+    "project_id": "student-monitoring-4ff72",
+    "storage_bucket": "student-monitoring-4ff72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309523790372:android:bd4f964797055e3900f6b1",
+        "android_client_info": {
+          "package_name": "com.ark.studentmonitoring"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309523790372-4lnbi9d608svt3op4it48gkm8daniu0p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBIL_ZAt3aQwBvOphU7mN175I94D9K4M4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309523790372-4lnbi9d608svt3op4it48gkm8daniu0p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
