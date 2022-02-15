@@ -41,7 +41,7 @@ public class SignIn extends AppCompatActivity {
                 if (Utility.ValidateEmail(email)){
                     signIn(email, pass);
                     binding.signInBtn.setEnabled(false);
-                    binding.progressCircular.setVisibility(View.GONE);
+                    binding.progressCircular.setVisibility(View.VISIBLE);
                 }else {
                     Utility.toastLS(SignIn.this, "Format email salah");
                 }
@@ -56,12 +56,12 @@ public class SignIn extends AppCompatActivity {
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 binding.signInBtn.setEnabled(true);
-                binding.progressCircular.setVisibility(View.VISIBLE);
+                binding.progressCircular.setVisibility(View.GONE);
                 Utility.updateUI(SignIn.this, HomeApp.class);
                 finish();
             }else {
                 binding.signInBtn.setEnabled(true);
-                binding.progressCircular.setVisibility(View.VISIBLE);
+                binding.progressCircular.setVisibility(View.GONE);
                 Utility.toastLS(SignIn.this, task.getException().getMessage());
             }
         });
