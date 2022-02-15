@@ -1,19 +1,20 @@
 package com.ark.studentmonitoring.View.Auth;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import com.ark.studentmonitoring.Model.ModelUser;
 import com.ark.studentmonitoring.Utility;
 import com.ark.studentmonitoring.databinding.ActivitySignUpBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUp extends AppCompatActivity {
 
     private ActivitySignUpBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,28 @@ public class SignUp extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                FirebaseUser user = auth.getCurrentUser();
+                saveDataUser(username, user.getUid(),email);
+            }else {
+                binding.signUpBtn.setEnabled(true);
+                binding.progressCircular.setVisibility(View.GONE);
+                Utility.toastLS(SignUp.this, task.getException().getMessage());
+            }
+        });
+    }
+
+    private void saveDataUser(String username, String uid,String email){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+        ModelUser modelUser = new ModelUser(
+                username,
+                email,
+                "parent",
+                "-"
+        );
+
+        reference.child("users").child(uid).setValue(modelUser).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 binding.signUpBtn.setEnabled(true);
                 binding.progressCircular.setVisibility(View.GONE);
