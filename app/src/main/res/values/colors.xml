@@ -9,5 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="purple_custom">#8b6fef</color>
     <color name="gray">#B3B3B3</color>
+    <color name="yellow">#f78074</color>
+    <color name="blue">#69DDFA</color>
+    <color name="green">#6BE48D</color>
+    <color name="pink">#a62cc4</color>
+
+
     <color name="transparent">#00FFFFFF</color>
 </resources>
