@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudentMonitoring">
         <activity
+            android:name=".View.User.Administrator.Dashboard"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Profile"
+            android:exported="false" />
+        <activity
             android:name=".View.User.HomeApp"
             android:exported="false" />
         <activity
