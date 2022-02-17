@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudentMonitoring">
         <activity
+            android:name=".View.User.Administrator.ManageYearSchool"
+            android:exported="false" />
+        <activity
             android:name=".View.User.Parent.SearchViewStudent"
             android:exported="false" />
         <activity
