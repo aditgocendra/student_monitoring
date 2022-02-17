@@ -80,7 +80,8 @@ public class SignUp extends AppCompatActivity {
                 username,
                 email,
                 "parent",
-                "-"
+                "-",
+                "- "
         );
 
         reference.child("users").child(uid).setValue(modelUser).addOnCompleteListener(task -> {
