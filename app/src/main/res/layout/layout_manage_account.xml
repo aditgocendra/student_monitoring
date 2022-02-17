@@ -9,76 +9,73 @@
     android:layout_marginBottom="8dp"
     app:cardCornerRadius="8dp">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_edit_account"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:cardCornerRadius="3dp"
+        android:layout_margin="6dp"
+        app:cardElevation="1dp"
+        android:layout_gravity="end">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            android:layout_gravity="center"/>
+
+    </androidx.cardview.widget.CardView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_margin="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.1">
+            android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/icon_category_manage"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:id="@+id/icon_user"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:src="@drawable/default_parent_photo"/>
 
-            <TextView
-                android:id="@+id/username_account"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Shesiana"
-                android:layout_marginTop="3dp"
-                android:textColor="@color/purple_200"
-                android:fontFamily="@font/poppins_medium"/>
+                android:orientation="vertical"
+                android:layout_marginStart="12dp">
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="0.9">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_edit_category"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                app:cardCornerRadius="3dp"
-                android:layout_margin="3dp"
-                app:cardElevation="1dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/username_account"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_edit"
-                    android:layout_gravity="center"/>
+                    android:text="Shesiana"
+                    android:textSize="12sp"
+                    android:textColor="@color/purple_200"
+                    android:fontFamily="@font/poppins_medium"/>
 
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_delete_category"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                app:cardCornerRadius="3dp"
-                android:layout_margin="3dp"
-                app:cardElevation="1dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/role_account_text"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_delete"
-                    android:layout_gravity="center"/>
+                    android:text="Peran : Orang Tua"
+                    android:textSize="11sp"
+                    android:textColor="@color/purple_200"
+                    android:fontFamily="@font/poppins_medium"/>
 
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
     </LinearLayout>
+
+
+
 
 </androidx.cardview.widget.CardView>

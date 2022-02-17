@@ -30,7 +30,29 @@
             android:layout_gravity="center_horizontal">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/name_category_add"
+                android:id="@+id/name_edit_student"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:maxLength="24"
+                android:inputType="text"
+                android:textSize="12sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="NISN"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_gravity="center_horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nisn_edit_student"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
@@ -52,11 +74,11 @@
             android:layout_gravity="center_horizontal">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/student_class_now"
+                android:id="@+id/student_class_now_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:maxLength="24"
+                android:maxLength="2"
                 android:inputType="text"
                 android:textSize="12sp"/>
 
@@ -74,7 +96,7 @@
             android:layout_gravity="center_horizontal">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/age_student"
+                android:id="@+id/age_student_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"

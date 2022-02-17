@@ -157,6 +157,7 @@
                             android:background="@color/transparent"
                             android:drawableStart="@drawable/ic_phone"
                             android:drawablePadding="8dp"
+                            android:maxLength="13"
                             android:fontFamily="@font/poppins_medium"
                             android:inputType="number"
                             android:textColor="#B3B3B3"
@@ -180,7 +181,7 @@
                             android:drawableStart="@drawable/ic_streetview"
                             android:drawablePadding="8dp"
                             android:fontFamily="@font/poppins_medium"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:textColor="#B3B3B3"
                             android:textSize="12sp" />
 
@@ -249,7 +250,6 @@
                             android:background="@color/transparent"
                             android:drawableStart="@drawable/ic_child"
                             android:drawablePadding="8dp"
-                            android:enabled="false"
                             android:fontFamily="@font/poppins_medium"
                             android:inputType="text"
                             android:textColor="#B3B3B3"
@@ -280,7 +280,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
-                        android:id="@+id/edit_data_child"
+                        android:id="@+id/edit_data_parent_child"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="18dp"
@@ -342,11 +342,10 @@
                             android:background="@color/transparent"
                             android:drawableStart="@drawable/ic_name_teacher"
                             android:drawablePadding="8dp"
-                            android:enabled="false"
                             android:fontFamily="@font/poppins_medium"
                             android:inputType="text"
                             android:textColor="#B3B3B3"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -374,7 +373,7 @@
 
 
                     <Button
-                        android:id="@+id/edit_data_teacher"
+                        android:id="@+id/edit_data_teacher_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="18dp"
