@@ -1,23 +1,35 @@
 package com.ark.studentmonitoring.View.User.Administrator;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import com.ark.studentmonitoring.R;
+
+
+import com.ark.studentmonitoring.Adapter.AdapterManageAccount;
+import com.ark.studentmonitoring.Model.ModelUser;
+
 import com.ark.studentmonitoring.Utility;
 import com.ark.studentmonitoring.databinding.ActivityManageAccountBinding;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ManageAccount extends AppCompatActivity {
 
     private ActivityManageAccountBinding binding;
-    private BottomSheetDialog bottomSheetDialog;
-
+    private AdapterManageAccount adapterManageAccount;
+    private List<ModelUser> userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,40 +39,44 @@ public class ManageAccount extends AppCompatActivity {
         Utility.checkWindowSetFlag(this);
         listenerClick();
 
-        bottomSheetDialog = new BottomSheetDialog(ManageAccount.this);
-        setBottomDialog();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        binding.recycleManageAccount.setLayoutManager(layoutManager);
+        binding.recycleManageAccount.setItemAnimator(new DefaultItemAnimator());
 
+        setDataAccount();
     }
+
 
     private void listenerClick() {
         binding.backBtn.setOnClickListener(view -> {
             Utility.updateUI(ManageAccount.this, DashboardAdmin.class);
             finish();
         });
+    }
 
-        binding.cardEditAccount.setOnClickListener(new View.OnClickListener() {
+    private void setDataAccount() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("users").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                bottomSheetDialog.show();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    ModelUser modelUser = dataSnapshot.getValue(ModelUser.class);
+                    modelUser.setKey(dataSnapshot.getKey());
+                    if (!modelUser.getRole().equals("admin")){
+                        userList.add(modelUser);
+                    }
+                }
+                adapterManageAccount = new AdapterManageAccount(ManageAccount.this, userList);
+                binding.recycleManageAccount.setAdapter(adapterManageAccount);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
 
-    private void setBottomDialog(){
-        View viewBottomDialog = getLayoutInflater().inflate(R.layout.layout_dialog_edit_account, null, false);
-        AutoCompleteTextView autoCompleteRole = viewBottomDialog.findViewById(R.id.auto_complete_role);
-        Button finishEditBtn = viewBottomDialog.findViewById(R.id.finish_edit_btn);
 
-        String[] role = {"Administrator","Guru", "Orang Tua"};
-        ArrayAdapter<String> accountAdapter;
-        accountAdapter = new ArrayAdapter<>(this, R.layout.layout_option_item, role);
-        autoCompleteRole.setAdapter(accountAdapter);
-        autoCompleteRole.setOnItemClickListener((adapterView, view, i, l) -> {
-            String item = adapterView.getItemAtPosition(i).toString();
-        });
-
-        finishEditBtn.setOnClickListener(view -> bottomSheetDialog.dismiss());
-
-        bottomSheetDialog.setContentView(viewBottomDialog);
-    }
 }
