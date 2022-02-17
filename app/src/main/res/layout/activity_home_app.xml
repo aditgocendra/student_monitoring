@@ -90,6 +90,7 @@
                         android:layout_gravity="center_vertical|end"/>
 
                     <TextView
+                        android:id="@+id/redirect_search_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Pencarian Siswa"
@@ -127,6 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
+                android:visibility="gone"
                 android:text="Anak Anda" />
 
             <androidx.cardview.widget.CardView
@@ -135,6 +137,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12.5dp"
                 app:cardElevation="2dp"
+                android:visibility="gone"
                 android:backgroundTint="@color/purple_custom">
 
                 <LinearLayout
@@ -161,16 +164,16 @@
                             android:text="Nama : Nendhra Hutagalung"
                             android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/white"
-                            android:textSize="12sp"/>
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Kelas : 6A"
+                            android:text="NISN : 48545316824"
                             android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/white"
-                            android:textSize="12sp"/>
+                            android:textSize="10sp"/>
 
                     </LinearLayout>
 
@@ -404,6 +407,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/card_6_sd"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="5dp"
