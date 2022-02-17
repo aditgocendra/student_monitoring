@@ -6,17 +6,19 @@ public class ModelUser {
     private String email;
     private String role;
     private String phone_number;
+    private String address;
     private String key;
 
     public ModelUser(){
 
     }
 
-    public ModelUser(String username, String email, String role, String phone_number) {
+    public ModelUser(String username, String email, String role, String phone_number, String address) {
         this.username = username;
         this.email = email;
         this.role = role;
         this.phone_number = phone_number;
+        this.address = address;
     }
 
     public String getUsername() {
@@ -51,6 +53,14 @@ public class ModelUser {
         this.phone_number = phone_number;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getKey() {
         return key;
     }
@@ -58,5 +68,4 @@ public class ModelUser {
     public void setKey(String key) {
         this.key = key;
     }
-
 }
