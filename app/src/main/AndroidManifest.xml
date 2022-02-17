@@ -12,7 +12,49 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudentMonitoring">
         <activity
-            android:name=".View.User.Administrator.Dashboard"
+            android:name=".View.User.Parent.SearchViewStudent"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.About"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Parent.StudentList"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Parent.ClassList"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Parent.ChildValue"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Teacher.ValueStudent"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Teacher.StudentChoice"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Teacher.ManageMyClass"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Teacher.DashboardTeacher"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Teacher.AddStudent"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Teacher.ManageStudent"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Teacher.ManageValueStudent"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Administrator.ManageStudentClass"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Administrator.ManageAccount"
+            android:exported="false" />
+        <activity
+            android:name=".View.User.Administrator.DashboardAdmin"
             android:exported="false" />
         <activity
             android:name=".View.User.Profile"
