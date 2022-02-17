@@ -164,6 +164,28 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp"
+                        android:hint="Alamat"
+                        android:textColorHint="#B3B3B3">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/street_profile_ti"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:drawableStart="@drawable/ic_streetview"
+                            android:drawablePadding="8dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:inputType="number"
+                            android:textColor="#B3B3B3"
+                            android:textSize="12sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <Button
                         android:id="@+id/edit_data_profile_btn"
                         android:layout_width="match_parent"
@@ -350,6 +372,7 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+
                     <Button
                         android:id="@+id/edit_data_teacher"
                         android:layout_width="match_parent"
@@ -366,6 +389,7 @@
 
             </androidx.cardview.widget.CardView>
 
+<!--            all role-->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -396,6 +420,20 @@
                         android:textColor="#B3B3B3"
                         android:visibility="gone"
                         app:drawableEndCompat="@drawable/ic_admin_panel"/>
+
+                    <TextView
+                        android:id="@+id/teacher_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:padding="6dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="13sp"
+                        android:visibility="gone"
+                        android:text="Fitur Guru"
+                        android:textColor="#B3B3B3"
+                        app:drawableEndCompat="@drawable/ic_teacher_feature"/>
 
                     <TextView
                         android:id="@+id/about_btn"
