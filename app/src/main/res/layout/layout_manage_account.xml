@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.1">
+
+            <ImageView
+                android:id="@+id/icon_category_manage"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/default_parent_photo"/>
+
+            <TextView
+                android:id="@+id/username_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Shesiana"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/purple_200"
+                android:fontFamily="@font/poppins_medium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.9">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_edit_category"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:cardCornerRadius="3dp"
+                android:layout_margin="3dp"
+                app:cardElevation="1dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_edit"
+                    android:layout_gravity="center"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_delete_category"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:cardCornerRadius="3dp"
+                android:layout_margin="3dp"
+                app:cardElevation="1dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_delete"
+                    android:layout_gravity="center"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
