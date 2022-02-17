@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import com.ark.studentmonitoring.Model.ModelUser;
 import com.ark.studentmonitoring.NetworkChangeListener;
+import com.ark.studentmonitoring.R;
 import com.ark.studentmonitoring.Utility;
 import com.ark.studentmonitoring.View.Auth.SignIn;
-import com.ark.studentmonitoring.View.User.Administrator.Dashboard;
+import com.ark.studentmonitoring.View.User.Administrator.DashboardAdmin;
+import com.ark.studentmonitoring.View.User.Teacher.DashboardTeacher;
 import com.ark.studentmonitoring.databinding.ActivityProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,8 +32,8 @@ public class Profile extends AppCompatActivity {
         setContentView(binding.getRoot());
         Utility.checkWindowSetFlag(this);
 
-        listenerClick();
         setLayoutRole();
+        listenerClick();
         setDataUser();
     }
 
@@ -53,6 +55,17 @@ public class Profile extends AppCompatActivity {
         if (Utility.roleCurrentUser.equals("admin")){
             binding.administratorBtn.setVisibility(View.VISIBLE);
         }
+
+        if (Utility.roleCurrentUser.equals("teacher")){
+            binding.teacherBtn.setVisibility(View.VISIBLE);
+            binding.cardFeatureRollTeacher.setVisibility(View.VISIBLE);
+            binding.profileImg.setImageResource(R.drawable.default_teacher_photo);
+        }
+
+        if (Utility.roleCurrentUser.equals("parent")){
+            binding.cardFeatureRollParent.setVisibility(View.VISIBLE);
+            binding.profileImg.setImageResource(R.drawable.default_parent_photo);
+        }
     }
 
     private void listenerClick() {
@@ -68,26 +81,26 @@ public class Profile extends AppCompatActivity {
         });
 
         binding.administratorBtn.setOnClickListener(view -> {
-            Utility.updateUI(Profile.this, Dashboard.class);
-            finish();
+            Utility.updateUI(Profile.this, DashboardAdmin.class);
         });
 
-        binding.editDataProfileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = binding.emailEditTi.getText().toString();
-                String username = binding.usernameEditTi.getText().toString();
-                String phone_number = binding.phoneNumberEditTi.getText().toString();
+        binding.teacherBtn.setOnClickListener(view -> Utility.updateUI(Profile.this, DashboardTeacher.class));
 
-                if (email.isEmpty()){
-                    binding.emailEditTi.setError("Email tidak boleh kosong");
-                }else if (username.isEmpty()){
-                    binding.usernameEditTi.setError("Username tidak boleh kosong");
-                }else if (phone_number.isEmpty()){
-                    binding.phoneNumberEditTi.setError("Nomor telepon tidak boleh kosong");
-                }else {
-                    saveDataProfile(email, username, phone_number);
-                }
+        binding.aboutBtn.setOnClickListener(view -> Utility.updateUI(Profile.this, About.class));
+
+        binding.editDataProfileBtn.setOnClickListener(view -> {
+            String email = binding.emailEditTi.getText().toString();
+            String username = binding.usernameEditTi.getText().toString();
+            String phone_number = binding.phoneNumberEditTi.getText().toString();
+
+            if (email.isEmpty()){
+                binding.emailEditTi.setError("Email tidak boleh kosong");
+            }else if (username.isEmpty()){
+                binding.usernameEditTi.setError("Username tidak boleh kosong");
+            }else if (phone_number.isEmpty()){
+                binding.phoneNumberEditTi.setError("Nomor telepon tidak boleh kosong");
+            }else {
+                saveDataProfile(email, username, phone_number);
             }
         });
     }
@@ -129,7 +142,5 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
-
-
 
 }
