@@ -8,6 +8,7 @@ import com.ark.studentmonitoring.Utility;
 import com.ark.studentmonitoring.View.User.HomeApp;
 import com.ark.studentmonitoring.databinding.ActivitySignInBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SignIn extends AppCompatActivity {
 
@@ -57,6 +58,10 @@ public class SignIn extends AppCompatActivity {
             if (task.isSuccessful()){
                 binding.signInBtn.setEnabled(true);
                 binding.progressCircular.setVisibility(View.GONE);
+
+                FirebaseUser user = auth.getCurrentUser();
+                Utility.uidCurrentUser = user.getUid();
+
                 Utility.updateUI(SignIn.this, HomeApp.class);
                 finish();
             }else {
