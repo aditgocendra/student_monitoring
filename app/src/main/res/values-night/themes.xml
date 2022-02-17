@@ -16,4 +16,15 @@
 <!--        <item name="android:windowTranslucentStatus">true</item>-->
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="NoBorderTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">#00FFFFFF</item>
+        <item name="boxStrokeWidth">0dp</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
 </resources>
