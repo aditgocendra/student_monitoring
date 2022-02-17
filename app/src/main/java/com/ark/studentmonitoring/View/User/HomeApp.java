@@ -10,7 +10,11 @@ import android.view.View;
 
 import com.ark.studentmonitoring.Model.ModelUser;
 import com.ark.studentmonitoring.NetworkChangeListener;
+import com.ark.studentmonitoring.R;
 import com.ark.studentmonitoring.Utility;
+import com.ark.studentmonitoring.View.User.Parent.ChildValue;
+import com.ark.studentmonitoring.View.User.Parent.ClassList;
+import com.ark.studentmonitoring.View.User.Parent.SearchViewStudent;
 import com.ark.studentmonitoring.databinding.ActivityHomeAppBinding;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,12 +37,9 @@ public class HomeApp extends AppCompatActivity {
     @Override
     protected void onStart() {
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-                registerReceiver(networkChangeListener, filter);
-            }
+        handler.postDelayed(() -> {
+            IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+            registerReceiver(networkChangeListener, filter);
         }, 1000);
         super.onStart();
     }
@@ -52,7 +53,28 @@ public class HomeApp extends AppCompatActivity {
     private void listenerClick() {
         binding.accountImg.setOnClickListener(view -> {
             Utility.updateUI(HomeApp.this, Profile.class);
-            finish();
+
+        });
+
+        binding.cardMyChild.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utility.updateUI(HomeApp.this, ChildValue.class);
+            }
+        });
+
+        binding.redirectSearchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utility.updateUI(HomeApp.this, SearchViewStudent.class);
+            }
+        });
+
+        binding.card6Sd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utility.updateUI(HomeApp.this, ClassList.class);
+            }
         });
     }
 
@@ -74,14 +96,17 @@ public class HomeApp extends AppCompatActivity {
         if (Utility.roleCurrentUser.equals("parent")){
             binding.textPresent.setText("Haloo "+ Utility.usernameCurrentUser);
             binding.textPresent2.setText("Yuk pantau perkembangan anakmu");
+            binding.accountImg.setImageResource(R.drawable.default_parent_photo);
+            binding.cardMyChild.setVisibility(View.VISIBLE);
+            binding.textHeaderChild.setVisibility(View.VISIBLE);
         }else if(Utility.roleCurrentUser.equals("teacher")) {
             binding.textPresent.setText("Haloo "+ Utility.usernameCurrentUser);
             binding.textPresent2.setText("Yuk bantu orang tua untuk perkembangan anaknya");
+            binding.accountImg.setImageResource(R.drawable.default_teacher_photo);
         }else {
             binding.textPresent.setText("Haloo Administrator");
             binding.textPresent2.setText("Apa yang ingin anda lakukan hari ini");
-            binding.cardMyChild.setVisibility(View.GONE);
-            binding.textHeaderChild.setVisibility(View.GONE);
+
         }
     }
 
