@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">StudentMonitoring</string>
+
+    <string name="about">
+        Aplikasi ini merupakan aplikasi monitoring anak berkebutuhan khusus, yang dibuat untuk mempermudah orang tua dalam memantau perkembangan pembelajaran anak, pada Sekolah Dasar Negeri 30 Palembang.
+    </string>
+
 </resources>
