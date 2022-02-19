@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 
 import com.ark.studentmonitoring.Utility;
-import com.ark.studentmonitoring.View.User.Profile;
 import com.ark.studentmonitoring.databinding.ActivityDashboardAdminBinding;
 
 
@@ -28,7 +27,6 @@ public class DashboardAdmin extends AppCompatActivity {
 
     private void listenerClick() {
         binding.backBtn.setOnClickListener(view -> {
-            Utility.updateUI(DashboardAdmin.this, Profile.class);
             finish();
         });
 

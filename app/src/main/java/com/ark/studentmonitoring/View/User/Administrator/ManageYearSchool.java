@@ -52,7 +52,6 @@ public class ManageYearSchool extends AppCompatActivity {
 
     private void listenerClick() {
         binding.backBtn.setOnClickListener(view -> {
-            Utility.updateUI(ManageYearSchool.this, DashboardAdmin.class);
             finish();
         });
         binding.floatAddYearSchool.setOnClickListener(view -> bottomSheetDialog.show());

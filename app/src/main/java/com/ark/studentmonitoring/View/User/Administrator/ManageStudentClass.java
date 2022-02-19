@@ -63,7 +63,6 @@ public class ManageStudentClass extends AppCompatActivity {
 
     private void listenerClick() {
         binding.backBtn.setOnClickListener(view -> {
-            Utility.updateUI(ManageStudentClass.this, DashboardAdmin.class);
             finish();
         });
 
@@ -116,7 +115,8 @@ public class ManageStudentClass extends AppCompatActivity {
         ModelStudentClass modelStudentClass = new ModelStudentClass(
             student_class,
                 subClass,
-                yearSchool
+                yearSchool,
+                "-"
         );
         reference.child("class").child(student_class).push().setValue(modelStudentClass).addOnCompleteListener(task -> {
             if (task.isSuccessful()){

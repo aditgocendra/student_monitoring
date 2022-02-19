@@ -49,7 +49,6 @@ public class ManageAccount extends AppCompatActivity {
 
     private void listenerClick() {
         binding.backBtn.setOnClickListener(view -> {
-            Utility.updateUI(ManageAccount.this, DashboardAdmin.class);
             finish();
         });
     }
