@@ -27,25 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
-            android:hint="Pilih Tahun Ajaran">
-
-            <AutoCompleteTextView
-                android:id="@+id/auto_complete_choice_year"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusableInTouchMode="true"
-                android:inputType="none"
-                android:textSize="12sp"
-                android:fontFamily="@font/poppins_medium"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
             android:hint="Pilih Kelas">
 
             <AutoCompleteTextView
@@ -59,15 +40,29 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/finish_add_btn"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_sub_class"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Selesai"
             android:layout_marginTop="6dp"
-            android:fontFamily="@font/poppins_medium"
-            android:textSize="12sp"
-            android:textAllCaps="false"/>
+            android:layout_marginBottom="6dp"
+            android:visibility="gone"
+            android:hint="Pilih Sub Kelas">
+
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_choice_sub_class"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:inputType="none"
+                android:textSize="12sp"
+
+                android:fontFamily="@font/poppins_medium"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
     </LinearLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.User.Profile">
+    tools:context=".View.User.Teacher.ValueStudent">
 
     <ProgressBar
         android:id="@+id/progress_circular"
@@ -17,9 +17,9 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/background_top_child"
+        android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
-        android:layout_alignParentTop="true"/>
+        android:src="@drawable/background_top_child" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -56,13 +56,14 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/profile_img"
+                    android:id="@+id/icon_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/women_student" />
 
                 <TextView
+                    android:id="@+id/name_student_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Neshia Pasaratus"
@@ -91,17 +92,17 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/text_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginStart="14dp"
                         android:layout_marginEnd="14dp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textSize="13sp"
-                        android:text="Nilai Sikap Siswa"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="12sp"
+                        android:text="Nilai Sikap Siswa : A"
                         android:textColor="#B3B3B3"/>
-
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/NoBorderTextInputLayoutStyle"
@@ -109,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:layout_marginBottom="6dp"
-                        android:hint="Sikap"
+                        android:hint="Nilai Sikap"
                         android:textColorHint="@color/gray">
 
                         <AutoCompleteTextView
@@ -129,14 +130,14 @@
 
 
                     <Button
-                        android:id="@+id/edit_data_profile_btn"
+                        android:id="@+id/edit_data_value_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="18dp"
                         android:layout_marginEnd="18dp"
                         android:layout_marginBottom="3dp"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Simpan"
+                        android:text="Simpan Perubahan"
                         android:textAllCaps="false" />
 
                 </LinearLayout>
