@@ -36,7 +36,6 @@ public class AddStudent extends AppCompatActivity {
         binding.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utility.updateUI(AddStudent.this, ManageStudent.class);
                 finish();
             }
         });

@@ -23,7 +23,6 @@ public class StudentList extends AppCompatActivity {
 
     private void listenerClick() {
         binding.backBtn.setOnClickListener(view -> {
-            Utility.updateUI(StudentList.this, ClassList.class);
             finish();
         });
 

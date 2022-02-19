@@ -24,7 +24,6 @@ public class DashboardTeacher extends AppCompatActivity {
 
     private void listenerClick() {
         binding.backBtn.setOnClickListener(view -> {
-            Utility.updateUI(DashboardTeacher.this, Profile.class);
             finish();
         });
 

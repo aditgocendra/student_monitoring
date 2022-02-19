@@ -31,7 +31,6 @@ public class SearchViewStudent extends AppCompatActivity {
 
     private void listenerClick() {
         binding.backBtn.setOnClickListener(view -> {
-            Utility.updateUI(SearchViewStudent.this, HomeApp.class);
             finish();
         });
     }

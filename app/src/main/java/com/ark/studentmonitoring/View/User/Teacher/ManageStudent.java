@@ -50,7 +50,6 @@ public class ManageStudent extends AppCompatActivity {
 
     private void listenerClick() {
         binding.backBtn.setOnClickListener(view -> {
-            Utility.updateUI(ManageStudent.this, DashboardTeacher.class);
             finish();
         });
 

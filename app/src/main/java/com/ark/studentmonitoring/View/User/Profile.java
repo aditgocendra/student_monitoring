@@ -36,6 +36,7 @@ public class Profile extends AppCompatActivity {
         setContentView(binding.getRoot());
         Utility.checkWindowSetFlag(this);
 
+        setDataUser();
         setLayoutRole();
         listenerClick();
 
@@ -56,7 +57,6 @@ public class Profile extends AppCompatActivity {
     }
 
     private void setLayoutRole() {
-        setDataUser();
 
         if (Utility.roleCurrentUser.equals("admin")){
             binding.administratorBtn.setVisibility(View.VISIBLE);
@@ -78,7 +78,6 @@ public class Profile extends AppCompatActivity {
 
     private void listenerClick() {
         binding.backBtn.setOnClickListener(view -> {
-            Utility.updateUI(Profile.this, HomeApp.class);
             finish();
         });
 
@@ -136,24 +135,21 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        binding.editDataParentChild.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name_child = binding.nameChildTi.getText().toString();
-                String nisn = binding.nisnEditTi.getText().toString();
+        binding.editDataParentChild.setOnClickListener(view -> {
+            String name_child = binding.nameChildTi.getText().toString();
+            String nisn = binding.nisnEditTi.getText().toString();
 
-                if (name_child.isEmpty()){
-                    binding.nameChildTi.setError("Nama anak tidak boleh kosong");
-                }else if (nisn.isEmpty()){
-                    binding.nisnEditTi.setError("nisn tidak boleh kosong");
+            if (name_child.isEmpty()){
+                binding.nameChildTi.setError("Nama anak tidak boleh kosong");
+            }else if (nisn.isEmpty()){
+                binding.nisnEditTi.setError("nisn tidak boleh kosong");
+            }else {
+                if (Utility.roleCurrentUser.equals("parent")){
+                    binding.progressCircular.setVisibility(View.VISIBLE);
+                    binding.progressCircular.setEnabled(false);
+                    saveDataParent(name_child, nisn);
                 }else {
-                    if (Utility.roleCurrentUser.equals("parent")){
-                        binding.progressCircular.setVisibility(View.VISIBLE);
-                        binding.progressCircular.setEnabled(false);
-                        saveDataParent(name_child, nisn);
-                    }else {
-                        Utility.toastLS(Profile.this, "Anda bukan wali murid");
-                    }
+                    Utility.toastLS(Profile.this, "Anda bukan wali murid");
                 }
             }
         });

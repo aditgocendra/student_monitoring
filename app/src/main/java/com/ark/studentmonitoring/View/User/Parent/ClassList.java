@@ -27,7 +27,6 @@ public class ClassList extends AppCompatActivity {
         binding.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utility.updateUI(ClassList.this, HomeApp.class);
                 finish();
             }
         });

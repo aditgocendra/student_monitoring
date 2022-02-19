@@ -22,7 +22,6 @@ public class ChildValue extends AppCompatActivity {
     private void listenerClick() {
 
         binding.backBtn.setOnClickListener(view -> {
-            Utility.updateUI(ChildValue.this, HomeApp.class);
             finish();
         });
 
