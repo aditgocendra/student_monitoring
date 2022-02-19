@@ -16,13 +16,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ark.studentmonitoring.Model.ModelStudent;
+import com.ark.studentmonitoring.Model.ModelStudentInClass;
 import com.ark.studentmonitoring.R;
 import com.ark.studentmonitoring.Utility;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -57,12 +61,11 @@ public class AdapterManageStudent extends RecyclerView.Adapter<AdapterManageStud
 
         holder.nameText.setText("Nama : "+modelStudent.getName());
         holder.nisnText.setText("NISN : "+modelStudent.getNisn());
-        holder.classText.setText("Kelas : "+modelStudent.getClass_now());
 
         holder.cardDelete.setOnClickListener(view -> {
             //Create the Dialog here
             Dialog dialog = new Dialog(mContext);
-            dialog.setContentView(R.layout.custom_dialog_confirmation_year_school);
+            dialog.setContentView(R.layout.custom_dialog_delete);
             dialog.getWindow().setBackgroundDrawable(mContext.getDrawable(R.drawable.custom_dialog_background));
 
             dialog.getWindow().setLayout(
@@ -84,9 +87,11 @@ public class AdapterManageStudent extends RecyclerView.Adapter<AdapterManageStud
             Cancel.setOnClickListener(v -> dialog.dismiss());
         });
 
-        bottomSheetDialog = new BottomSheetDialog(mContext);
-        setBottomDialog(modelStudent);
-        holder.cardEdit.setOnClickListener(view -> bottomSheetDialog.show());
+        holder.cardEdit.setOnClickListener(view -> {
+            bottomSheetDialog = new BottomSheetDialog(mContext);
+            setBottomDialog(modelStudent);
+            bottomSheetDialog.show();
+        });
     }
 
 
@@ -96,7 +101,7 @@ public class AdapterManageStudent extends RecyclerView.Adapter<AdapterManageStud
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView nameText, nisnText, classText;
+        TextView nameText, nisnText;
         ImageView iconStudent;
         CardView cardEdit, cardDelete;
         public MyViewHolder(@NonNull View itemView) {
@@ -104,7 +109,6 @@ public class AdapterManageStudent extends RecyclerView.Adapter<AdapterManageStud
 
             nameText = itemView.findViewById(R.id.name_child_text);
             nisnText = itemView.findViewById(R.id.nisn_child_text);
-            classText = itemView.findViewById(R.id.class_child_text);
             iconStudent = itemView.findViewById(R.id.icon_student);
             cardEdit = itemView.findViewById(R.id.card_edit_data_student);
             cardDelete = itemView.findViewById(R.id.card_delete_data_student);
@@ -137,7 +141,6 @@ public class AdapterManageStudent extends RecyclerView.Adapter<AdapterManageStud
         ArrayAdapter<String> diagnosaAdapter;
         diagnosaAdapter = new ArrayAdapter<>(mContext, R.layout.layout_option_item, diagnosa);
         autoCompleteDiagnosa.setAdapter(diagnosaAdapter);
-
 
         finishEditBtn.setOnClickListener(view -> {
             String name = nameTiEdit.getText().toString();
@@ -186,7 +189,6 @@ public class AdapterManageStudent extends RecyclerView.Adapter<AdapterManageStud
                 Utility.toastLS(mContext, task.getException().getMessage());
             }
         });
-
     }
 
     private void deleteStudent(String key) {
@@ -198,9 +200,27 @@ public class AdapterManageStudent extends RecyclerView.Adapter<AdapterManageStud
                 Utility.toastLS(mContext, "Data gagal dihapus");
             }
         });
+
+        reference.child("student_in_class").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    for (DataSnapshot dataSnapshot : ds.getChildren()){
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                            ModelStudentInClass modelStudentInClass = dataSnapshot1.getValue(ModelStudentInClass.class);
+                            if (modelStudentInClass.getKey_student().equals(key)){
+                                dataSnapshot1.getRef().removeValue();
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Utility.toastLS(mContext, "Database : "+error);
+            }
+        });
     }
-
-
-
 
 }
