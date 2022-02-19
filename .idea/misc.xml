@@ -8,6 +8,7 @@
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/cursor_input_color.xml" value="0.138" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/custom_dialog_background.xml" value="0.1215" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_about.xml" value="0.1995" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_add_circle.xml" value="0.1695" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_admin_panel.xml" value="0.1995" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_back.xml" value="0.1995" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_bhs_indo.xml" value="0.198" />
@@ -17,6 +18,7 @@
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_delete.xml" value="0.1995" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_edit.xml" value="0.1995" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_email.xml" value="0.139" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_eye.xml" value="0.1695" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_icon_search.xml" value="0.1625" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_ipa.xml" value="0.198" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_ips.xml" value="0.198" />
@@ -31,12 +33,15 @@
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_phone.xml" value="0.1995" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_signal_broken.xml" value="0.1995" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_streetview.xml" value="0.1995" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_student_add.xml" value="0.1165" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_teacher_fitur.xml" value="0.1995" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_warning.xml" value="0.1215" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/drawable/ic_year_school.xml" value="0.179" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_about.xml" value="0.25" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_add_student.xml" value="0.25" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_add_student_my_class.xml" value="0.22" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_broken_connection.xml" value="0.25" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_child_value.xml" value="0.24070115433946132" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_class_list.xml" value="0.33" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_dashboard.xml" value="0.33" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_dashboard_admin.xml" value="0.25" />
@@ -45,26 +50,30 @@
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_home_app.xml" value="0.33" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_manage_account.xml" value="0.24070115433946132" />
-        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_manage_my_class.xml" value="0.2291577597263788" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_manage_my_class.xml" value="0.11380597014925373" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_manage_student.xml" value="0.33" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_manage_student_class.xml" value="0.33" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_manage_student_my_class.xml" value="0.19837537409149208" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_manage_value_student.xml" value="0.25" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_manage_year_school.xml" value="0.21851851851851853" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_my_child.xml" value="0.25" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_profile.xml" value="0.2" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_searchview_student.xml" value="0.33" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_see_student_my_class.xml" value="0.19837537409149208" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_sign_in.xml" value="0.22" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_sign_up.xml" value="0.24898785425101214" />
-        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_student_choice.xml" value="0.22" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_student_choice.xml" value="0.33" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_student_list.xml" value="0.22" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/activity_value_student.xml" value="0.25" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/custom_dialog_add_student_my_class.xml" value="0.18469431380932022" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/custom_dialog_confirmation.xml" value="0.24070115433946132" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/custom_dialog_confirmation_year_school.xml" value="0.22" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/custom_dialog_delete.xml" value="0.24070115433946132" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_broken_connection.xml" value="0.24070115433946132" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_card_student_choice.xml" value="0.24070115433946132" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_check_connection.xml" value="0.24070115433946132" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_dialog_add_class.xml" value="0.22" />
-        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_dialog_add_myclass.xml" value="0.22" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_dialog_add_myclass.xml" value="0.1" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_dialog_add_year_school.xml" value="0.24070115433946132" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_dialog_edit_account.xml" value="0.24070115433946132" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_dialog_edit_class.xml" value="0.24070115433946132" />
@@ -73,10 +82,13 @@
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_dialog_edit_year_school.xml" value="0.24070115433946132" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_edit_student.xml" value="0.24070115433946132" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_manage_account.xml" value="0.25" />
-        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_manage_student.xml" value="0.24070115433946132" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_manage_my_class.xml" value="0.25" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_manage_student.xml" value="0.33" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_manage_student_class.xml" value="0.24070115433946132" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_manage_value_student.xml" value="0.24070115433946132" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_manage_year_school.xml" value="0.33" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_option_item.xml" value="0.24070115433946132" />
+        <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/layout/layout_student_card.xml" value="0.22" />
         <entry key="..\:/Users/Gocendra/AndroidStudioProjects/StudentMonitoring/app/src/main/res/menu/searchview_menu.xml" value="0.24070115433946132" />
       </map>
     </option>
