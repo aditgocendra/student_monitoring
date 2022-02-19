@@ -80,42 +80,36 @@ public class AdapterManageStudentClass extends RecyclerView.Adapter<AdapterManag
         holder.subClass.setText("Kelas : "+modelStudentClass.getStudent_class()+modelStudentClass.getSub_student_class());
         holder.yearSchool.setText("TA : "+modelStudentClass.getYear_school());
 
-        bottomSheetDialog = new BottomSheetDialog(mContext);
-        setEditBottomDialog(modelStudentClass);
 
-        holder.cardEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomSheetDialog.show();
-            }
+        holder.cardEdit.setOnClickListener(view -> {
+            bottomSheetDialog = new BottomSheetDialog(mContext);
+            setEditBottomDialog(modelStudentClass);
+            bottomSheetDialog.show();
         });
 
-        holder.cardDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Create the Dialog here
-                Dialog dialog = new Dialog(mContext);
-                dialog.setContentView(R.layout.custom_dialog_confirmation_year_school);
-                dialog.getWindow().setBackgroundDrawable(mContext.getDrawable(R.drawable.custom_dialog_background));
+        holder.cardDelete.setOnClickListener(view -> {
+            //Create the Dialog here
+            Dialog dialog = new Dialog(mContext);
+            dialog.setContentView(R.layout.custom_dialog_delete);
+            dialog.getWindow().setBackgroundDrawable(mContext.getDrawable(R.drawable.custom_dialog_background));
 
-                dialog.getWindow().setLayout(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
 
-                dialog.setCancelable(false); //Optional
-                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
+            dialog.setCancelable(false); //Optional
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
 
-                Button Okay = dialog.findViewById(R.id.btn_okay);
-                Button Cancel = dialog.findViewById(R.id.btn_cancel);
+            Button Okay = dialog.findViewById(R.id.btn_okay);
+            Button Cancel = dialog.findViewById(R.id.btn_cancel);
 
-                dialog.show();
-                Okay.setOnClickListener(v -> {
-                    deleteDataStudentClass(modelStudentClass);
-                    dialog.dismiss();
-                });
+            dialog.show();
+            Okay.setOnClickListener(v -> {
+                deleteDataStudentClass(modelStudentClass);
+                dialog.dismiss();
+            });
 
-                Cancel.setOnClickListener(v -> dialog.dismiss());
-            }
+            Cancel.setOnClickListener(v -> dialog.dismiss());
         });
 
     }
@@ -185,7 +179,8 @@ public class AdapterManageStudentClass extends RecyclerView.Adapter<AdapterManag
         ModelStudentClass studentClass = new ModelStudentClass(
             modelStudentClass.getStudent_class(),
             newSubClass,
-            newYear
+            newYear,
+                "-"
         );
         reference.child("class")
                 .child(modelStudentClass.getStudent_class())
@@ -206,15 +201,12 @@ public class AdapterManageStudentClass extends RecyclerView.Adapter<AdapterManag
         reference.child("class")
                 .child(modelStudentClass.getStudent_class())
                 .child(modelStudentClass.getKey())
-                .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Utility.toastLS(mContext, "Data berhasil dihapus");
-                }else {
-                    Utility.toastLS(mContext, "Gagal menghapus data");
-                }
-            }
-        });
+                .removeValue().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        Utility.toastLS(mContext, "Data berhasil dihapus");
+                    }else {
+                        Utility.toastLS(mContext, "Gagal menghapus data");
+                    }
+                });
     }
 }
