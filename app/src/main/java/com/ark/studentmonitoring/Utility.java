@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
 
 public class Utility {
@@ -38,6 +39,7 @@ public class Utility {
     public static void toastLL(Context context, String message){
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
+
 
     public static void checkWindowSetFlag(Activity activity){
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {

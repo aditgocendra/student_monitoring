@@ -52,30 +52,16 @@ public class HomeApp extends AppCompatActivity {
 
     private void listenerClick() {
         binding.accountImg.setOnClickListener(view -> {
-            Utility.updateUI(HomeApp.this, Profile.class);
-
-        });
-
-        binding.cardMyChild.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utility.updateUI(HomeApp.this, ChildValue.class);
+            if (!Utility.roleCurrentUser.isEmpty()){
+                Utility.updateUI(HomeApp.this, Profile.class);
             }
         });
 
-        binding.redirectSearchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utility.updateUI(HomeApp.this, SearchViewStudent.class);
-            }
-        });
+        binding.cardMyChild.setOnClickListener(view -> Utility.updateUI(HomeApp.this, ChildValue.class));
 
-        binding.card6Sd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utility.updateUI(HomeApp.this, ClassList.class);
-            }
-        });
+        binding.redirectSearchView.setOnClickListener(view -> Utility.updateUI(HomeApp.this, SearchViewStudent.class));
+
+        binding.card6Sd.setOnClickListener(view -> Utility.updateUI(HomeApp.this, ClassList.class));
     }
 
     private void setRoleUserCurrent(){
