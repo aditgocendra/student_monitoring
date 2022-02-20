@@ -59,7 +59,7 @@ public class AdapterManageStudent extends RecyclerView.Adapter<AdapterManageStud
             holder.iconStudent.setImageResource(R.drawable.women_student);
         }
 
-        holder.nameText.setText("Nama : "+modelStudent.getName());
+        holder.nameText.setText("Nama : "+Utility.capitalizeWord(modelStudent.getName()));
         holder.nisnText.setText("NISN : "+modelStudent.getNisn());
 
         holder.cardDelete.setOnClickListener(view -> {
@@ -222,5 +222,7 @@ public class AdapterManageStudent extends RecyclerView.Adapter<AdapterManageStud
             }
         });
     }
+
+
 
 }
