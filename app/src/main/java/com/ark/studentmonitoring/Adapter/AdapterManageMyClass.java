@@ -94,24 +94,19 @@ public class AdapterManageMyClass extends RecyclerView.Adapter<AdapterManageMyCl
             }
         });
 
-        holder.cardAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, AddStudentMyClass.class);
-                intent.putExtra("class", modelStudentClass.getStudent_class());
-                intent.putExtra("key_class", modelStudentClass.getKey());
-                mContext.startActivity(intent);
-            }
+        holder.cardAdd.setOnClickListener(view -> {
+            Intent intent = new Intent(mContext, AddStudentMyClass.class);
+            intent.putExtra("class", modelStudentClass.getStudent_class());
+            intent.putExtra("sub_class", modelStudentClass.getSub_student_class());
+            intent.putExtra("key_class", modelStudentClass.getKey());
+            mContext.startActivity(intent);
         });
 
-        holder.cardSee.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, SeeStudentMyClass.class);
-                intent.putExtra("class", modelStudentClass.getStudent_class());
-                intent.putExtra("key_class", modelStudentClass.getKey());
-                mContext.startActivity(intent);
-            }
+        holder.cardSee.setOnClickListener(view -> {
+            Intent intent = new Intent(mContext, SeeStudentMyClass.class);
+            intent.putExtra("class", modelStudentClass.getStudent_class());
+            intent.putExtra("key_class", modelStudentClass.getKey());
+            mContext.startActivity(intent);
         });
     }
 
