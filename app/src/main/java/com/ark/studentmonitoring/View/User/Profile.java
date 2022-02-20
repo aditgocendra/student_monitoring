@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ark.studentmonitoring.Model.ModelParent;
+import com.ark.studentmonitoring.Model.ModelStudent;
 import com.ark.studentmonitoring.Model.ModelTeacher;
 import com.ark.studentmonitoring.Model.ModelUser;
 import com.ark.studentmonitoring.NetworkChangeListener;
@@ -21,8 +22,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Profile extends AppCompatActivity {
 
@@ -41,7 +44,6 @@ public class Profile extends AppCompatActivity {
         listenerClick();
 
     }
-
 
     @Override
     protected void onStart() {
@@ -78,6 +80,7 @@ public class Profile extends AppCompatActivity {
 
     private void listenerClick() {
         binding.backBtn.setOnClickListener(view -> {
+            Utility.updateUI(Profile.this, HomeApp.class);
             finish();
         });
 
@@ -136,18 +139,15 @@ public class Profile extends AppCompatActivity {
         });
 
         binding.editDataParentChild.setOnClickListener(view -> {
-            String name_child = binding.nameChildTi.getText().toString();
             String nisn = binding.nisnEditTi.getText().toString();
 
-            if (name_child.isEmpty()){
-                binding.nameChildTi.setError("Nama anak tidak boleh kosong");
-            }else if (nisn.isEmpty()){
+            if (nisn.isEmpty()){
                 binding.nisnEditTi.setError("nisn tidak boleh kosong");
             }else {
                 if (Utility.roleCurrentUser.equals("parent")){
                     binding.progressCircular.setVisibility(View.VISIBLE);
                     binding.progressCircular.setEnabled(false);
-                    saveDataParent(name_child, nisn);
+                    checkRegNumber(nisn);
                 }else {
                     Utility.toastLS(Profile.this, "Anda bukan wali murid");
                 }
@@ -200,24 +200,21 @@ public class Profile extends AppCompatActivity {
         });
     }
 
-    private void saveDataParent(String name_child, String nisn){
+    private void saveDataParent(String nisn, String keyStudent){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         ModelParent modelParent = new ModelParent(
-                name_child,
-                nisn
+                nisn,
+                keyStudent
         );
-        reference.child("user_detail").child(Utility.uidCurrentUser).setValue(modelParent).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    binding.progressCircular.setVisibility(View.GONE);
-                    binding.progressCircular.setEnabled(true);
-                    Utility.toastLS(Profile.this, "Berhasil mengubah data orang tua");
-                }else {
-                    binding.progressCircular.setVisibility(View.GONE);
-                    binding.progressCircular.setEnabled(true);
-                    Utility.toastLS(Profile.this, task.getException().getMessage());
-                }
+        reference.child("user_detail").child(Utility.uidCurrentUser).setValue(modelParent).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                binding.progressCircular.setVisibility(View.GONE);
+                binding.progressCircular.setEnabled(true);
+                Utility.toastLS(Profile.this, "Berhasil mengubah data orang tua");
+            }else {
+                binding.progressCircular.setVisibility(View.GONE);
+                binding.progressCircular.setEnabled(true);
+                Utility.toastLS(Profile.this, task.getException().getMessage());
             }
         });
     }
@@ -246,39 +243,62 @@ public class Profile extends AppCompatActivity {
 
     private void setDataTeacher(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("user_detail").child(Utility.uidCurrentUser).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()){
-                    ModelTeacher modelTeacher = task.getResult().getValue(ModelTeacher.class);
-                    if (modelTeacher != null){
-                        binding.fullnameTeacherTi.setText(modelTeacher.getFull_name());
-                        binding.nipGuruTi.setText(modelTeacher.getNip());
-                    }
-
-                }else {
-                    Utility.toastLS(Profile.this, task.getException().getMessage());
+        reference.child("user_detail").child(Utility.uidCurrentUser).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                ModelTeacher modelTeacher = task.getResult().getValue(ModelTeacher.class);
+                if (modelTeacher != null){
+                    binding.fullnameTeacherTi.setText(modelTeacher.getFull_name());
+                    binding.nipGuruTi.setText(modelTeacher.getNip());
                 }
+
+            }else {
+                Utility.toastLS(Profile.this, task.getException().getMessage());
             }
         });
     }
 
     private void setDataChildParent(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("user_detail").child(Utility.uidCurrentUser).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()){
-                    ModelParent modelParent = task.getResult().getValue(ModelParent.class);
-                    if (modelParent != null){
-                        binding.nameChildTi.setText(modelParent.getChild_name());
-                        binding.nisnEditTi.setText(modelParent.getNisn());
-                    }
-                }else {
-                    Utility.toastLS(Profile.this, task.getException().getMessage());
+        reference.child("user_detail").child(Utility.uidCurrentUser).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                ModelParent modelParent = task.getResult().getValue(ModelParent.class);
+                if (modelParent != null){
+                    binding.nisnEditTi.setText(modelParent.getNisn());
                 }
+            }else {
+                Utility.toastLS(Profile.this, task.getException().getMessage());
             }
         });
     }
 
+    private void checkRegNumber(String nisn){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("student").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    ModelStudent modelStudent = ds.getValue(ModelStudent.class);
+                    modelStudent.setKey(ds.getKey());
+                    if (modelStudent.getNisn().equals(nisn)){
+                        saveDataParent(nisn, modelStudent.getKey());
+                        return;
+                    }
+                }
+                Utility.toastLS(Profile.this, "NISN tidak ditemukan");
+                binding.progressCircular.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Utility.toastLS(Profile.this, "Database : "+error.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Utility.updateUI(Profile.this, HomeApp.class);
+        finish();
+    }
 }
