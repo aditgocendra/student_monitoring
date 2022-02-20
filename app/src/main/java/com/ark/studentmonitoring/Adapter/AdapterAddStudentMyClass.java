@@ -61,8 +61,8 @@ public class AdapterAddStudentMyClass extends RecyclerView.Adapter<AdapterAddStu
         }else {
             holder.iconImage.setImageResource(R.drawable.women_student);
         }
-        holder.textName.setText(modelStudent.getName());
-        holder.textNisn.setText(modelStudent.getNisn());
+        holder.textName.setText("Nama : "+modelStudent.getName());
+        holder.textNisn.setText("NISN : "+modelStudent.getNisn());
 
         holder.cardStudent.setOnClickListener(view -> {
             //Create the Dialog here
