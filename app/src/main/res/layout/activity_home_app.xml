@@ -56,15 +56,6 @@
 
             </LinearLayout>
 
-<!--            <ImageView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:scaleType="centerCrop"-->
-<!--                android:src="@drawable/background_top_home_app"-->
-<!--                app:layout_collapseMode="parallax"-->
-<!--                app:layout_collapseParallaxMultiplier="1"-->
-<!--                />-->
-
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -86,22 +77,20 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/default_admin_photo"
-                        android:layout_marginEnd="11dp"
+                        android:layout_marginEnd="14dp"
                         android:layout_gravity="center_vertical|end"/>
 
                     <TextView
-                        android:id="@+id/redirect_search_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pencarian Siswa"
+                        android:text="Monitoring Siswa"
                         android:textColor="#B3B3B3"
                         android:gravity="center_vertical"
-                        android:textSize="13sp"
-                        android:layout_marginStart="11dp"
+                        android:textSize="14sp"
+                        android:layout_marginStart="14dp"
                         android:drawablePadding="4dp"
                         android:fontFamily="@font/poppins_medium"
-                        android:layout_gravity="center_vertical|start"
-                        app:drawableLeftCompat="@drawable/ic_icon_search"/>
+                        android:layout_gravity="center_vertical|start"/>
 
                 </androidx.cardview.widget.CardView>
 
@@ -131,6 +120,7 @@
                 android:visibility="gone"
                 android:text="Anak Anda" />
 
+<!--            parent role-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_my_child"
                 android:layout_width="match_parent"
@@ -159,21 +149,25 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/name_student_card"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nama : Nendhra Hutagalung"
+                            android:text="Haloo ayah, dan ibuu"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/white"
                             android:textSize="13sp"/>
 
                         <TextView
+                            android:id="@+id/key_student_card"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="NISN : 48545316824"
+                            android:text="-"
+                            android:layout_marginTop="5dp"
+                            android:visibility="gone"
                             android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/white"
-                            android:textSize="10sp"/>
+                            android:textSize="13sp"/>
 
                     </LinearLayout>
 
@@ -196,6 +190,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/card_1_sd"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="5dp"
@@ -235,6 +230,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/card_2_sd"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="5dp"
@@ -282,6 +278,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/card_3_sd"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="5dp"
@@ -321,6 +318,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/card_4_sd"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="5dp"
@@ -368,6 +366,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/card_5_sd"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="5dp"
