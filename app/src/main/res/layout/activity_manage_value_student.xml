@@ -75,7 +75,7 @@
             android:id="@+id/recycle_manage_value_student"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/layout_manage_value_student"/>
+            tools:listitem="@layout/layout_card_class"/>
 
         <TextView
             android:id="@+id/warning_category_text_null"
