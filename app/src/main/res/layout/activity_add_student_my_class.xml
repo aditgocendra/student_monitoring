@@ -6,6 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".View.User.Teacher.AddStudentMyClass">
 
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:translationZ="1dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,12 +37,17 @@
                 android:layout_marginEnd="8dp"/>
 
             <EditText
+                android:id="@+id/search_student_by_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:backgroundTint="@color/transparent"
                 android:fontFamily="@font/poppins_regular"
-                android:hint="Pencarian Siswa"
+                android:hint="Pencarian Siswaa"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:imeActionLabel="Search"
                 android:minHeight="48dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
@@ -42,6 +55,8 @@
 
 
         </LinearLayout>
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_add_student_class"
