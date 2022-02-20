@@ -35,12 +35,14 @@ public class AdapterAddStudentMyClass extends RecyclerView.Adapter<AdapterAddStu
     private List<ModelStudent> listStudent;
     private String classStudent;
     private String keyClass;
+    private String subClass;
 
-    public AdapterAddStudentMyClass(Context mContext, List<ModelStudent> listStudent, String classStudent, String keyClass) {
+    public AdapterAddStudentMyClass(Context mContext, List<ModelStudent> listStudent, String classStudent, String keyClass, String subClass) {
         this.mContext = mContext;
         this.listStudent = listStudent;
         this.classStudent = classStudent;
         this.keyClass = keyClass;
+        this.subClass = subClass;
     }
 
     @NonNull
@@ -109,8 +111,7 @@ public class AdapterAddStudentMyClass extends RecyclerView.Adapter<AdapterAddStu
     private void addStudentInClass(String keyStudent) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         ModelStudentInClass modelStudentInClass = new ModelStudentInClass(
-                keyStudent,
-                "-"
+                keyStudent
         );
 
 //        Log.d("test", classStudent + " / "+ keyClass + " / "+ keyStudent);
@@ -119,18 +120,15 @@ public class AdapterAddStudentMyClass extends RecyclerView.Adapter<AdapterAddStu
                 .child(classStudent)
                 .child(keyClass)
                 .child(keyStudent)
-                .setValue(modelStudentInClass).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Utility.toastLS(mContext, "Siswa berhasil ditambahkan");
-                    Utility.updateUI(mContext, ManageMyClass.class);
-                    ((Activity)mContext).finish();
-                }else {
-                    Utility.toastLS(mContext, task.getException().getMessage());
-                }
-            }
-        });
+                .setValue(modelStudentInClass).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        Utility.toastLS(mContext, "Siswa berhasil ditambahkan");
+                        Utility.updateUI(mContext, ManageMyClass.class);
+                        ((Activity)mContext).finish();
+                    }else {
+                        Utility.toastLS(mContext, task.getException().getMessage());
+                    }
+                });
     }
 
 
