@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Locale;
+
 public class AddStudent extends AppCompatActivity {
 
     private ActivityAddStudentBinding binding;
@@ -74,7 +76,7 @@ public class AddStudent extends AppCompatActivity {
     private void saveDataStudent(String name, String nisn,  String studentNowClass, String age, String gender, String diagnosa) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         ModelStudent modelStudent = new ModelStudent(
-                name,
+                name.toLowerCase(Locale.ROOT),
                 nisn,
                 studentNowClass,
                 age,
@@ -88,7 +90,6 @@ public class AddStudent extends AppCompatActivity {
                 if (task.isSuccessful()){
                     binding.progressCircular.setVisibility(View.GONE);
                     Utility.toastLS(AddStudent.this, "Data berhasil ditambahkan");
-                    Utility.updateUI(AddStudent.this, ManageStudent.class);
                     finish();
                 }else {
                     binding.progressCircular.setVisibility(View.GONE);
