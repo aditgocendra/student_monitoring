@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -53,6 +54,7 @@ public class AddStudentMyClass extends AppCompatActivity {
         keyClass = getIntent().getStringExtra("key_class");
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+
         binding.recycleAddStudentClass.setLayoutManager(layoutManager);
         binding.recycleAddStudentClass.setItemAnimator(new DefaultItemAnimator());
 
@@ -116,14 +118,24 @@ public class AddStudentMyClass extends AppCompatActivity {
                                       ModelStudentInClass modelStudentInClass = task.getResult().getValue(ModelStudentInClass.class);
                                       if (modelStudentInClass == null){
                                           listModelStudent.add(modelStudent);
+                                          adapterAddStudentMyClass.notifyDataSetChanged();
                                       }
                                   }else {
                                       Utility.toastLS(AddStudentMyClass.this, "Data gagal dimuat");
                                   }
                               });
                   }
-                  adapterAddStudentMyClass = new AdapterAddStudentMyClass(AddStudentMyClass.this, listModelStudent, classStudent, keyClass, subClass);
-                  binding.recycleAddStudentClass.setAdapter(adapterAddStudentMyClass);
+                  Log.d("test1", String.valueOf(listModelStudent.size()));
+                  Handler handler = new Handler();
+                  handler.postDelayed(new Runnable() {
+                      @Override
+                      public void run() {
+                          adapterAddStudentMyClass = new AdapterAddStudentMyClass(AddStudentMyClass.this, listModelStudent, classStudent, keyClass, subClass);
+                          binding.recycleAddStudentClass.setAdapter(adapterAddStudentMyClass);
+                      }
+                  },1000);
+
+                  Log.d("test", "adapter set");
             }
 
             @Override
@@ -163,8 +175,14 @@ public class AddStudentMyClass extends AppCompatActivity {
                         }
                     });
                 }
-                adapterAddStudentMyClass = new AdapterAddStudentMyClass(AddStudentMyClass.this, listModelStudent, classStudent, keyClass, subClass);
-                binding.recycleAddStudentClass.setAdapter(adapterAddStudentMyClass);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapterAddStudentMyClass = new AdapterAddStudentMyClass(AddStudentMyClass.this, listModelStudent, classStudent, keyClass, subClass);
+                        binding.recycleAddStudentClass.setAdapter(adapterAddStudentMyClass);
+                    }
+                },500);
             }
 
             @Override

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -50,6 +51,7 @@ public class SeeStudentMyClass extends AppCompatActivity {
         listenerClick();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        binding.recycleSeeStudentClass.setHasFixedSize(true);
         binding.recycleSeeStudentClass.setLayoutManager(layoutManager);
         binding.recycleSeeStudentClass.setItemAnimator(new DefaultItemAnimator());
 
@@ -101,7 +103,6 @@ public class SeeStudentMyClass extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()){
                     ModelStudent modelStudent = ds.getValue(ModelStudent.class);
                     modelStudent.setKey(ds.getKey());
-
                     reference
                             .child("student_in_class")
                             .child(classStudent)
@@ -111,14 +112,24 @@ public class SeeStudentMyClass extends AppCompatActivity {
                             if (modelStudentInClass != null){
                                 modelStudentInClass.setKey(task.getResult().getKey());
                                 listStudent.add(modelStudent);
+                                Log.d("test", modelStudent.getName());
                             }
                         }else {
                             Utility.toastLS(SeeStudentMyClass.this, "Data gagal dimuat");
                         }
                     });
                 }
-                adapterSeeStudentMyClass = new AdapterSeeStudentMyClass(SeeStudentMyClass.this, listStudent);
-                binding.recycleSeeStudentClass.setAdapter(adapterSeeStudentMyClass);
+                Log.d("test1", String.valueOf(listStudent.size()));
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapterSeeStudentMyClass = new AdapterSeeStudentMyClass(SeeStudentMyClass.this, listStudent);
+                        binding.recycleSeeStudentClass.setAdapter(adapterSeeStudentMyClass);
+                    }
+                }, 1000);
+
+                Log.d("test2", "adapter set");
             }
 
             @Override
@@ -154,8 +165,14 @@ public class SeeStudentMyClass extends AppCompatActivity {
                         }
                     });
                 }
-                adapterSeeStudentMyClass = new AdapterSeeStudentMyClass(SeeStudentMyClass.this, listStudent);
-                binding.recycleSeeStudentClass.setAdapter(adapterSeeStudentMyClass);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapterSeeStudentMyClass = new AdapterSeeStudentMyClass(SeeStudentMyClass.this, listStudent);
+                        binding.recycleSeeStudentClass.setAdapter(adapterSeeStudentMyClass);
+                    }
+                }, 500);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

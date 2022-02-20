@@ -49,6 +49,7 @@ public class StudentChoice extends AppCompatActivity {
         listenerClick();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        binding.recycleStudentChoice.setHasFixedSize(true);
         binding.recycleStudentChoice.setLayoutManager(layoutManager);
         binding.recycleStudentChoice.setItemAnimator(new DefaultItemAnimator());
 
