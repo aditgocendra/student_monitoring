@@ -54,16 +54,16 @@
                 android:id="@+id/profile_img"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_marginTop="20dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/logo_apps" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
                 android:layout_marginTop="48dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="5dp"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="2dp">
@@ -77,28 +77,28 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="5dp"
                         android:layout_marginStart="14dp"
-                        android:textAlignment="center"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="5dp"
                         android:fontFamily="@font/poppins_bold"
-                        android:textSize="14sp"
                         android:text="Tentang"
-                        android:textColor="#B3B3B3"/>
+                        android:textAlignment="center"
+                        android:textColor="#B3B3B3"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:layout_marginStart="14dp"
-                        android:textAlignment="center"
                         android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="5dp"
                         android:fontFamily="@font/poppins_medium"
-                        android:textSize="12sp"
                         android:maxLines="12"
                         android:text="@string/about"
-                        android:textColor="#B3B3B3"/>
+                        android:textAlignment="center"
+                        android:textColor="#B3B3B3"
+                        android:textSize="12sp" />
 
 
                 </LinearLayout>
@@ -110,8 +110,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="5dp"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="2dp">
@@ -119,15 +119,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="10dp">
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/profile_img_dev"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/women_student"/>
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/dev" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -138,54 +139,52 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="14dp"
-                            android:textAlignment="textStart"
                             android:layout_marginEnd="14dp"
+                            android:layout_marginBottom="5dp"
+                            android:drawablePadding="4dp"
                             android:fontFamily="@font/poppins_medium"
-                            android:textSize="12sp"
                             android:maxLines="12"
                             android:text="Nadhira Shesiana"
+                            android:textAlignment="textStart"
                             android:textColor="#B3B3B3"
-                            app:drawableStartCompat="@drawable/ic_person"
-                            android:drawablePadding="4dp"/>
+                            android:textSize="12sp"
+                            app:drawableStartCompat="@drawable/ic_person" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:drawableStartCompat="@drawable/ic_npm"
-                            android:drawablePadding="4dp"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="14dp"
-                            android:textAlignment="textStart"
                             android:layout_marginEnd="14dp"
+                            android:layout_marginBottom="5dp"
+                            android:drawablePadding="4dp"
                             android:fontFamily="@font/poppins_medium"
-                            android:textSize="12sp"
                             android:maxLines="12"
                             android:text="1811010167"
-                            android:textColor="#B3B3B3"/>
+                            android:textAlignment="textStart"
+                            android:textColor="#B3B3B3"
+                            android:textSize="12sp"
+                            app:drawableStartCompat="@drawable/ic_npm" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:drawableStartCompat="@drawable/ic_phone"
-                            android:drawablePadding="4dp"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="14dp"
-                            android:textAlignment="textStart"
                             android:layout_marginEnd="14dp"
+                            android:layout_marginBottom="5dp"
+                            android:drawablePadding="4dp"
                             android:fontFamily="@font/poppins_medium"
-                            android:textSize="12sp"
                             android:maxLines="12"
                             android:text="+62 896 7630 5154"
-                            android:textColor="#B3B3B3"/>
+                            android:textAlignment="textStart"
+                            android:textColor="#B3B3B3"
+                            android:textSize="12sp"
+                            app:drawableStartCompat="@drawable/ic_phone" />
 
                     </LinearLayout>
 
 
                 </LinearLayout>
-
-
 
 
             </androidx.cardview.widget.CardView>
