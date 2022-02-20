@@ -121,12 +121,9 @@ public class SeeStudentMyClass extends AppCompatActivity {
                 }
                 Log.d("test1", String.valueOf(listStudent.size()));
                 Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapterSeeStudentMyClass = new AdapterSeeStudentMyClass(SeeStudentMyClass.this, listStudent);
-                        binding.recycleSeeStudentClass.setAdapter(adapterSeeStudentMyClass);
-                    }
+                handler.postDelayed(() -> {
+                    adapterSeeStudentMyClass = new AdapterSeeStudentMyClass(SeeStudentMyClass.this, listStudent, classStudent, keyClass);
+                    binding.recycleSeeStudentClass.setAdapter(adapterSeeStudentMyClass);
                 }, 1000);
 
                 Log.d("test2", "adapter set");
@@ -166,12 +163,9 @@ public class SeeStudentMyClass extends AppCompatActivity {
                     });
                 }
                 Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapterSeeStudentMyClass = new AdapterSeeStudentMyClass(SeeStudentMyClass.this, listStudent);
-                        binding.recycleSeeStudentClass.setAdapter(adapterSeeStudentMyClass);
-                    }
+                handler.postDelayed(() -> {
+                    adapterSeeStudentMyClass = new AdapterSeeStudentMyClass(SeeStudentMyClass.this, listStudent, classStudent, keyClass);
+                    binding.recycleSeeStudentClass.setAdapter(adapterSeeStudentMyClass);
                 }, 500);
             }
             @Override
