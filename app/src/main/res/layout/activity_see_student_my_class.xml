@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".View.User.Teacher.SeeStudentMyClass">
 
     <LinearLayout
@@ -29,17 +29,21 @@
                 android:layout_marginEnd="8dp"/>
 
             <EditText
+                android:id="@+id/search_student_by_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:backgroundTint="@color/transparent"
                 android:fontFamily="@font/poppins_regular"
-                android:hint="Pencarian Siswa"
+                android:hint="Pencarian Siswaa"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:imeActionLabel="Search"
                 android:minHeight="48dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 android:textSize="14sp" />
-
 
         </LinearLayout>
 
@@ -47,20 +51,9 @@
             android:id="@+id/recycle_see_student_class"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             tools:listitem="@layout/layout_manage_student"/>
 
-        <TextView
-            android:id="@+id/warning_null_data"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_height="wrap_content"
-            android:text="Belum ada siswa untuk ditambahkan"
-            android:fontFamily="@font/poppins_medium"
-            android:textAlignment="center"
-            android:layout_margin="16dp"/>
 
     </LinearLayout>
-
 
 </RelativeLayout>
