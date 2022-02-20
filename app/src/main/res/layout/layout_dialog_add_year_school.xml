@@ -37,7 +37,7 @@
                 android:focusableInTouchMode="true"
                 android:textSize="12sp"
                 android:maxLength="4"
-                android:inputType="text"/>
+                android:inputType="number"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,7 +57,7 @@
                 android:focusableInTouchMode="true"
                 android:textSize="12sp"
                 android:maxLength="4"
-                android:inputType="text"/>
+                android:inputType="number"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
