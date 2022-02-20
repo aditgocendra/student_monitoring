@@ -117,6 +117,7 @@ public class AdapterSeeStudentMyClass extends RecyclerView.Adapter<AdapterSeeStu
         reference.child("student_in_class").child(classStudent).child(keyClass).child(key).removeValue().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 removeValueStudent(key);
+                Utility.toastLS(mContext, "Data siswa di kelas ini berhasil dihapus");
             }else {
                 Utility.toastLS(mContext, task.getException().getMessage());
             }
@@ -135,7 +136,6 @@ public class AdapterSeeStudentMyClass extends RecyclerView.Adapter<AdapterSeeStu
                                 ModelValueStudent modelValueStudent = ds2.getValue(ModelValueStudent.class);
                                 if (modelValueStudent != null){
                                     ds2.getRef().removeValue();
-                                    ((Activity)mContext).finish();
                                 }
                             }
                         }
@@ -147,5 +147,7 @@ public class AdapterSeeStudentMyClass extends RecyclerView.Adapter<AdapterSeeStu
                 Utility.toastLS(mContext, "Database :"+error.getMessage());
             }
         });
+
+        ((Activity)mContext).finish();
     }
 }
