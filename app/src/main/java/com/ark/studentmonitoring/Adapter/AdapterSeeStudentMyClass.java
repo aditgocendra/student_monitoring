@@ -16,7 +16,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ark.studentmonitoring.Model.ModelStudent;
-import com.ark.studentmonitoring.Model.ModelStudentInClass;
 import com.ark.studentmonitoring.Model.ModelValueStudent;
 import com.ark.studentmonitoring.R;
 import com.ark.studentmonitoring.Utility;
@@ -32,11 +31,16 @@ public class AdapterSeeStudentMyClass extends RecyclerView.Adapter<AdapterSeeStu
 
     private Context mContext;
     private List<ModelStudent> lisStudent;
+    private String classStudent;
+    private String keyClass;
+
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-    public AdapterSeeStudentMyClass(Context mContext, List<ModelStudent> lisStudent) {
+    public AdapterSeeStudentMyClass(Context mContext, List<ModelStudent> lisStudent, String classStudent, String keyClass) {
         this.mContext = mContext;
         this.lisStudent = lisStudent;
+        this.classStudent = classStudent;
+        this.keyClass = keyClass;
     }
 
     @NonNull
@@ -63,32 +67,29 @@ public class AdapterSeeStudentMyClass extends RecyclerView.Adapter<AdapterSeeStu
         holder.nameText.setText("Name : "+ Utility.capitalizeWord(modelStudent.getName()));
         holder.nisnText.setText("NISN : "+modelStudent.getNisn());
 
-        holder.cardDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Create the Dialog here
-                Dialog dialog = new Dialog(mContext);
-                dialog.setContentView(R.layout.custom_dialog_delete);
-                dialog.getWindow().setBackgroundDrawable(mContext.getDrawable(R.drawable.custom_dialog_background));
+        holder.cardDelete.setOnClickListener(view -> {
+            //Create the Dialog here
+            Dialog dialog = new Dialog(mContext);
+            dialog.setContentView(R.layout.custom_dialog_delete);
+            dialog.getWindow().setBackgroundDrawable(mContext.getDrawable(R.drawable.custom_dialog_background));
 
-                dialog.getWindow().setLayout(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
 
-                dialog.setCancelable(false); //Optional
-                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
+            dialog.setCancelable(false); //Optional
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
 
-                Button Okay = dialog.findViewById(R.id.btn_okay);
-                Button Cancel = dialog.findViewById(R.id.btn_cancel);
+            Button Okay = dialog.findViewById(R.id.btn_okay);
+            Button Cancel = dialog.findViewById(R.id.btn_cancel);
 
-                dialog.show();
-                Okay.setOnClickListener(v -> {
-                    deleteStudentInClass(modelStudent.getKey());
-                    dialog.dismiss();
-                });
+            dialog.show();
+            Okay.setOnClickListener(v -> {
+                deleteStudentInClass(modelStudent.getKey());
+                dialog.dismiss();
+            });
 
-                Cancel.setOnClickListener(v -> dialog.dismiss());
-            }
+            Cancel.setOnClickListener(v -> dialog.dismiss());
         });
     }
 
@@ -113,29 +114,13 @@ public class AdapterSeeStudentMyClass extends RecyclerView.Adapter<AdapterSeeStu
     }
 
     private void deleteStudentInClass(String key) {
-//        bug delete all class
-        reference.child("student_in_class").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()){
-                    for (DataSnapshot dataSnapshot : ds.getChildren()){
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                            ModelStudentInClass modelStudentInClass = dataSnapshot1.getValue(ModelStudentInClass.class);
-                            if (modelStudentInClass.getKey_student().equals(key)){
-                                dataSnapshot1.getRef().removeValue();
-                                removeValueStudent(key);
-                            }
-                        }
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Utility.toastLS(mContext, "Database : "+error);
+        reference.child("student_in_class").child(classStudent).child(keyClass).child(key).removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                removeValueStudent(key);
+            }else {
+                Utility.toastLS(mContext, task.getException().getMessage());
             }
         });
-
-
     }
 
     private void removeValueStudent(String key){
@@ -148,7 +133,6 @@ public class AdapterSeeStudentMyClass extends RecyclerView.Adapter<AdapterSeeStu
                         for (DataSnapshot ds1 :ds.getChildren()){
                             for (DataSnapshot ds2 : ds1.getChildren()){
                                 ModelValueStudent modelValueStudent = ds2.getValue(ModelValueStudent.class);
-
                                 if (modelValueStudent != null){
                                     ds2.getRef().removeValue();
                                     ((Activity)mContext).finish();
@@ -158,10 +142,9 @@ public class AdapterSeeStudentMyClass extends RecyclerView.Adapter<AdapterSeeStu
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Utility.toastLS(mContext, "Database :"+error.getMessage());
             }
         });
     }
