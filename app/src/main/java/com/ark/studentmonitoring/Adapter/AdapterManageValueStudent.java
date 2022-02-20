@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ark.studentmonitoring.Model.ModelStudentClass;
 import com.ark.studentmonitoring.R;
-import com.ark.studentmonitoring.View.User.Teacher.SeeStudentMyClass;
 import com.ark.studentmonitoring.View.User.Teacher.StudentChoice;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class AdapterManageValueStudent extends RecyclerView.Adapter<AdapterManag
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.layout_manage_value_student, parent, false);
+        View view = layoutInflater.inflate(R.layout.layout_card_class, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -68,10 +67,13 @@ public class AdapterManageValueStudent extends RecyclerView.Adapter<AdapterManag
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, StudentChoice.class);
                 intent.putExtra("class", modelStudentClass.getStudent_class());
+                intent.putExtra("sub_class", modelStudentClass.getSub_student_class());
                 intent.putExtra("key_class", modelStudentClass.getKey());
                 mContext.startActivity(intent);
             }
         });
+
+
     }
 
     @Override
