@@ -31,12 +31,12 @@ import java.util.List;
 public class AdapterSeeStudentMyClass extends RecyclerView.Adapter<AdapterSeeStudentMyClass.MyViewHolder> {
 
     private Context mContext;
-    private List<ModelStudent> listStudentInClass;
+    private List<ModelStudent> lisStudent;
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-    public AdapterSeeStudentMyClass(Context mContext, List<ModelStudent> listStudentInClass) {
+    public AdapterSeeStudentMyClass(Context mContext, List<ModelStudent> lisStudent) {
         this.mContext = mContext;
-        this.listStudentInClass = listStudentInClass;
+        this.lisStudent = lisStudent;
     }
 
     @NonNull
@@ -51,7 +51,7 @@ public class AdapterSeeStudentMyClass extends RecyclerView.Adapter<AdapterSeeStu
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        ModelStudent modelStudent = listStudentInClass.get(position);
+        ModelStudent modelStudent = lisStudent.get(position);
         holder.cardEdit.setVisibility(View.GONE);
 
         if (modelStudent.getGender().equals("Laki-laki")){
@@ -94,7 +94,7 @@ public class AdapterSeeStudentMyClass extends RecyclerView.Adapter<AdapterSeeStu
 
     @Override
     public int getItemCount() {
-        return listStudentInClass.size();
+        return lisStudent.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -113,7 +113,7 @@ public class AdapterSeeStudentMyClass extends RecyclerView.Adapter<AdapterSeeStu
     }
 
     private void deleteStudentInClass(String key) {
-
+//        bug delete all class
         reference.child("student_in_class").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
