@@ -2,25 +2,17 @@ package com.ark.studentmonitoring.Model;
 
 public class ModelParent {
 
-    private String child_name;
     private String nisn;
+    private String key_student;
     private String key;
 
     public ModelParent(){
 
     }
 
-    public ModelParent(String child_name, String nisn) {
-        this.child_name = child_name;
+    public ModelParent(String nisn, String key_student) {
         this.nisn = nisn;
-    }
-
-    public String getChild_name() {
-        return child_name;
-    }
-
-    public void setChild_name(String child_name) {
-        this.child_name = child_name;
+        this.key_student = key_student;
     }
 
     public String getNisn() {
@@ -29,6 +21,14 @@ public class ModelParent {
 
     public void setNisn(String nisn) {
         this.nisn = nisn;
+    }
+
+    public String getKey_student() {
+        return key_student;
+    }
+
+    public void setKey_student(String key_student) {
+        this.key_student = key_student;
     }
 
     public String getKey() {
