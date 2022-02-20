@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -120,8 +121,12 @@ public class StudentChoice extends AppCompatActivity {
                     });
                 }
                 Log.d("test", String.valueOf(listStudent.size()));
-                adapterStudentChoice = new AdapterStudentChoice(StudentChoice.this, listStudent, classStudent, subClass, keyClass);
-                binding.recycleStudentChoice.setAdapter(adapterStudentChoice);
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    adapterStudentChoice = new AdapterStudentChoice(StudentChoice.this, listStudent, classStudent, subClass, keyClass);
+                    binding.recycleStudentChoice.setAdapter(adapterStudentChoice);
+                }, 1000);
+
                 binding.progressLoadData.setVisibility(View.GONE);
             }
 
@@ -159,8 +164,11 @@ public class StudentChoice extends AppCompatActivity {
                     });
                 }
                 Log.d("test", String.valueOf(listStudent.size()));
-                adapterStudentChoice = new AdapterStudentChoice(StudentChoice.this, listStudent, classStudent, subClass, keyClass);
-                binding.recycleStudentChoice.setAdapter(adapterStudentChoice);
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    adapterStudentChoice = new AdapterStudentChoice(StudentChoice.this, listStudent, classStudent, subClass, keyClass);
+                    binding.recycleStudentChoice.setAdapter(adapterStudentChoice);
+                }, 1000);
                 binding.progressLoadData.setVisibility(View.GONE);
             }
 
