@@ -1,25 +1,24 @@
 package com.ark.studentmonitoring.View.User.Teacher;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+
 import com.ark.studentmonitoring.Model.ModelStudent;
-import com.ark.studentmonitoring.Model.ModelStudentInClass;
+import com.ark.studentmonitoring.Model.ModelValueStudent;
 import com.ark.studentmonitoring.R;
 import com.ark.studentmonitoring.Utility;
 import com.ark.studentmonitoring.databinding.ActivityValueStudentBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
+import com.google.android.material.datepicker.MaterialDatePicker;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class ValueStudent extends AppCompatActivity {
 
     private ActivityValueStudentBinding binding;
-    private String classStudent, keyClass, keyStudent;
+    private String classStudent, keyClass, subClass, keyStudent;
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
     @Override
@@ -31,12 +30,11 @@ public class ValueStudent extends AppCompatActivity {
 
         classStudent = getIntent().getStringExtra("class");
         keyClass = getIntent().getStringExtra("key_class");
+        subClass = getIntent().getStringExtra("sub_class");
         keyStudent = getIntent().getStringExtra("key_student");
 
         listenerClick();
-
         setDataStudent();
-        setDataValue();
 
     }
 
@@ -44,19 +42,39 @@ public class ValueStudent extends AppCompatActivity {
         String[] choiceValue = {"A","B","C","D"};
         ArrayAdapter<String> choiceAdapter;
         choiceAdapter = new ArrayAdapter<>(this, R.layout.layout_option_item, choiceValue);
-
         binding.autoCompleteValueSikap.setAdapter(choiceAdapter);
+
         binding.backBtn.setOnClickListener(view -> finish());
 
-        binding.editDataValueBtn.setOnClickListener(new View.OnClickListener() {
+        MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+        builder.setTitleText("SELECT A DATE");
+        MaterialDatePicker<Long> materialDatePicker = builder.build();
+
+        materialDatePicker.addOnPositiveButtonClickListener(selection -> {
+            binding.datePick.setText(materialDatePicker.getHeaderText());
+
+        });
+
+        binding.datePick.setOnClickListener(view -> materialDatePicker.show(getSupportFragmentManager(), "Date Picker"));
+
+        binding.addValueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (binding.autoCompleteValueSikap.getText().toString().isEmpty()){
+                String value = binding.autoCompleteValueSikap.getText().toString();
+                String date = binding.datePick.getText().toString();
+                String description = binding.descriptionValue.getText().toString();
+
+                if (value.isEmpty()){
                     binding.autoCompleteValueSikap.setError("Nilai sikap kosong");
-                }else {
+                }else if (date.equals("Pilih Tanggal")){
+                    Utility.toastLS(ValueStudent.this, "Anda belum memilih tanggal");
+                }else if(description.isEmpty()){
+                    Utility.toastLS(ValueStudent.this, "Deskripsi masih kosong");
+                }
+                else {
                     binding.progressCircular.setVisibility(View.VISIBLE);
-                    binding.editDataValueBtn.setEnabled(false);
-                    changeDataValueStudent(binding.autoCompleteValueSikap.getText().toString());
+                    binding.addValueBtn.setEnabled(false);
+                    saveDataValueStudent(date, value, description);
                 }
             }
         });
@@ -83,38 +101,29 @@ public class ValueStudent extends AppCompatActivity {
         });
     }
 
-    private void setDataValue(){
-        // set value
-        reference.child("student_in_class").child(classStudent).child(keyClass).child(keyStudent).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()){
-                    ModelStudentInClass modelStudentInClass = task.getResult().getValue(ModelStudentInClass.class);
-                    if (modelStudentInClass != null){
-                        binding.textValue.setText("Nilai Sikap Siswa : "+modelStudentInClass.getValue_student());
-                    }
-                }else {
-                    Utility.toastLS(ValueStudent.this, task.getException().getMessage());
-                }
-            }
-        });
-    }
 
-    private void changeDataValueStudent(String value){
-        reference.child("student_in_class")
-                .child(classStudent)
-                .child(keyClass)
-                .child(keyStudent)
-                .child("value_student").setValue(value).addOnCompleteListener(task -> {
+    private void saveDataValueStudent(String date,String value, String description){
+        ModelValueStudent modelValueStudent = new ModelValueStudent(
+                date,
+                value,
+                description,
+                classStudent+subClass
+        );
+
+        reference.child("value_student")
+                .child(keyStudent)  // key student
+                .child(keyClass)    // key class
+                .push()             // key value
+                .setValue(modelValueStudent).addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
                         binding.progressCircular.setVisibility(View.GONE);
-                        binding.editDataValueBtn.setEnabled(true);
-                        binding.textValue.setText("Nilai Sikap Siswa : "+value);
-                        Utility.toastLS(ValueStudent.this, "Berhasil mengubah nilai siswa");
+                        binding.addValueBtn.setEnabled(true);
+                        Utility.toastLS(ValueStudent.this, "Berhasil menambahkan nilai siswa");
+                        finish();
                     }else {
                         Utility.toastLS(ValueStudent.this, task.getException().getMessage());
                         binding.progressCircular.setVisibility(View.GONE);
-                        binding.editDataValueBtn.setEnabled(true);
+                        binding.addValueBtn.setEnabled(true);
                     }
                 });
     }
