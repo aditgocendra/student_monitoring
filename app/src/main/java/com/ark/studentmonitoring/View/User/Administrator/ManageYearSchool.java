@@ -80,7 +80,7 @@ public class ManageYearSchool extends AppCompatActivity {
     }
 
     private void setDataYearSchool() {
-        reference.child("year_school").addValueEventListener(new ValueEventListener() {
+        reference.child("year_school").orderByChild("from_year").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listYearSchool = new ArrayList<>();
