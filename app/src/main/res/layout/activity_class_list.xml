@@ -40,112 +40,12 @@
 
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_class"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_class_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:cardCornerRadius="8dp">
+            tools:listitem="@layout/layout_card_class"/>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:layout_gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/icon_class_manage"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/icon_class_6"/>
-
-                <TextView
-                    android:id="@+id/sub_class_student"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Kelas : 6A"
-                    android:textSize="12sp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/purple_200"
-                    android:fontFamily="@font/poppins_medium"/>
-
-                <TextView
-                    android:id="@+id/ta_student_class"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TA : 2022 / 2023"
-                    android:textSize="12sp"
-                    android:textAlignment="center"
-                    android:textColor="@color/purple_200"
-                    android:fontFamily="@font/poppins_medium"/>
-
-            </LinearLayout>
-
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:cardCornerRadius="8dp">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:layout_gravity="center_vertical">
-
-
-                <ImageView
-                    android:id="@+id/icon_class_manage1"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/icon_class_6"/>
-
-                <TextView
-                    android:id="@+id/sub_class_studen1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Kelas : 6B"
-                    android:textSize="12sp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/purple_200"
-                    android:fontFamily="@font/poppins_medium"/>
-
-                <TextView
-                    android:id="@+id/ta_student_class1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TA : 2022 / 2023"
-                    android:textSize="12sp"
-                    android:textAlignment="center"
-                    android:textColor="@color/purple_200"
-                    android:fontFamily="@font/poppins_medium"/>
-            </LinearLayout>
-
-
-        </androidx.cardview.widget.CardView>
-
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/recycle_manage_account"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            tools:listitem="@layout/layout_manage_account"/>-->
 
         <TextView
             android:id="@+id/warning_category_text_null"
@@ -159,19 +59,6 @@
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/float_add_student_class"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="40dp"
-        app:icon="@drawable/ic_add"
-        app:iconTint="@color/white"
-        tools:ignore="SpeakableTextPresentCheck" />
 
 
 </RelativeLayout>
