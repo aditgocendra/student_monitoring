@@ -6,9 +6,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import com.ark.studentmonitoring.Adapter.AdapterAddStudentMyClass;
 import com.ark.studentmonitoring.Model.ModelStudent;
@@ -30,7 +37,7 @@ public class AddStudentMyClass extends AppCompatActivity {
 
     private ActivityAddStudentMyClassBinding binding;
 
-    private String classStudent, keyClass;
+    private String classStudent, subClass, keyClass;
     private List<ModelStudent> listModelStudent;
     private AdapterAddStudentMyClass adapterAddStudentMyClass;
 
@@ -42,6 +49,7 @@ public class AddStudentMyClass extends AppCompatActivity {
         Utility.checkWindowSetFlag(this);
 
         classStudent = getIntent().getStringExtra("class");
+        subClass = getIntent().getStringExtra("sub_class");
         keyClass = getIntent().getStringExtra("key_class");
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -56,11 +64,42 @@ public class AddStudentMyClass extends AppCompatActivity {
         binding.backBtn.setOnClickListener(view -> {
             finish();
         });
+
+
+        binding.searchStudentByName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() == 0){
+                    setDataStudent();
+                }else {
+                    String keySearch = binding.searchStudentByName.getText().toString();
+                    searchStudent(keySearch);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        binding.searchStudentByName.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            boolean handled = false;
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                Utility.hideKeyboard(AddStudentMyClass.this);
+                handled = true;
+            }
+            return handled;
+        });
     }
 
     private void setDataStudent() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("student").addValueEventListener(new ValueEventListener() {
+        reference.child("student").limitToLast(10).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                   listModelStudent = new ArrayList<>();
@@ -81,13 +120,10 @@ public class AddStudentMyClass extends AppCompatActivity {
                                   }else {
                                       Utility.toastLS(AddStudentMyClass.this, "Data gagal dimuat");
                                   }
-
                               });
                   }
-
-                  adapterAddStudentMyClass = new AdapterAddStudentMyClass(AddStudentMyClass.this, listModelStudent, classStudent, keyClass);
+                  adapterAddStudentMyClass = new AdapterAddStudentMyClass(AddStudentMyClass.this, listModelStudent, classStudent, keyClass, subClass);
                   binding.recycleAddStudentClass.setAdapter(adapterAddStudentMyClass);
-
             }
 
             @Override
@@ -96,4 +132,47 @@ public class AddStudentMyClass extends AppCompatActivity {
             }
         });
     }
+
+    private void searchStudent(String keyword){
+        binding.progressCircular.setVisibility(View.VISIBLE);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("student").orderByChild("name").startAt(keyword).endAt(keyword + "\uf8ff").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listModelStudent = new ArrayList<>();
+
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    ModelStudent modelStudent = ds.getValue(ModelStudent.class);
+                    modelStudent.setKey(ds.getKey());
+
+                    reference
+                            .child("student_in_class")
+                            .child(classStudent)
+                            .child(keyClass).child(modelStudent.getKey()).get().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()){
+                            ModelStudentInClass modelStudentInClass = task.getResult().getValue(ModelStudentInClass.class);
+                            if (modelStudentInClass == null){
+                                listModelStudent.add(modelStudent);
+                                binding.progressCircular.setVisibility(View.GONE);
+                            }else {
+                                binding.progressCircular.setVisibility(View.GONE);
+                            }
+                        }else {
+                            Utility.toastLS(AddStudentMyClass.this, "Data gagal dimuat");
+                            binding.progressCircular.setVisibility(View.GONE);
+                        }
+                    });
+                }
+                adapterAddStudentMyClass = new AdapterAddStudentMyClass(AddStudentMyClass.this, listModelStudent, classStudent, keyClass, subClass);
+                binding.recycleAddStudentClass.setAdapter(adapterAddStudentMyClass);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Utility.toastLS(AddStudentMyClass.this, error.getMessage());
+            }
+        });
+    }
+
+
 }
