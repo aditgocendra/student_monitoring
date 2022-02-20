@@ -118,7 +118,7 @@ public class AddStudentMyClass extends AppCompatActivity {
                                       ModelStudentInClass modelStudentInClass = task.getResult().getValue(ModelStudentInClass.class);
                                       if (modelStudentInClass == null){
                                           listModelStudent.add(modelStudent);
-                                          adapterAddStudentMyClass.notifyDataSetChanged();
+
                                       }
                                   }else {
                                       Utility.toastLS(AddStudentMyClass.this, "Data gagal dimuat");
