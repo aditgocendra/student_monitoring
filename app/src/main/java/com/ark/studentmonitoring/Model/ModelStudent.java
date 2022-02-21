@@ -1,6 +1,7 @@
 package com.ark.studentmonitoring.Model;
 
 public class ModelStudent {
+    private long index_student;
     private String name;
     private String nisn;
     private String class_now;
@@ -13,13 +14,22 @@ public class ModelStudent {
 
     }
 
-    public ModelStudent(String name, String nisn, String class_now, String age, String gender, String diagnosa) {
+    public ModelStudent(long index_student, String name, String nisn, String class_now, String age, String gender, String diagnosa) {
+        this.index_student = index_student;
         this.name = name;
         this.nisn = nisn;
         this.class_now = class_now;
         this.age = age;
         this.gender = gender;
         this.diagnosa = diagnosa;
+    }
+
+    public long getIndex_student() {
+        return index_student;
+    }
+
+    public void setIndex_student(long index_student) {
+        this.index_student = index_student;
     }
 
     public String getName() {

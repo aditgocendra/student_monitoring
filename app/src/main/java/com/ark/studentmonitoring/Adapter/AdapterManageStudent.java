@@ -163,7 +163,7 @@ public class AdapterManageStudent extends RecyclerView.Adapter<AdapterManageStud
             }else if (diagnosa1.isEmpty()){
                 autoCompleteDiagnosa.setError("Diagnosa kosong");
             }else {
-                changeDataStudent(name, nisn, classStudent, age, gender1, diagnosa1, modelStudent.getKey());
+                changeDataStudent(modelStudent.getIndex_student() ,name, nisn, classStudent, age, gender1, diagnosa1, modelStudent.getKey());
             }
 
             bottomSheetDialog.dismiss();
@@ -171,9 +171,9 @@ public class AdapterManageStudent extends RecyclerView.Adapter<AdapterManageStud
         bottomSheetDialog.setContentView(viewBottomDialog);
     }
 
-    private void changeDataStudent(String name, String nisn, String classStudent, String age, String gender, String diagnosa, String key) {
+    private void changeDataStudent(long index_student, String name, String nisn, String classStudent, String age, String gender, String diagnosa, String key) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        ModelStudent modelStudent = new ModelStudent(
+        ModelStudent modelStudent = new ModelStudent(index_student,
             name,
             nisn,
             classStudent,
