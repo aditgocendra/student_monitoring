@@ -176,23 +176,50 @@ public class AdapterManageStudentClass extends RecyclerView.Adapter<AdapterManag
     }
 
     private void changeDataClass(ModelStudentClass modelStudentClass, String newSubClass, String newYear){
+
         ModelStudentClass studentClass = new ModelStudentClass(
             modelStudentClass.getStudent_class(),
             newSubClass,
             newYear,
                 "-"
         );
+
+        // check before update
         reference.child("class")
                 .child(modelStudentClass.getStudent_class())
-                .child(modelStudentClass.getKey()).setValue(studentClass)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                .orderByChild("sub_student_class")
+                .equalTo(newSubClass).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Utility.toastLS(mContext, "Data berhasil diubah");
-                }else {
-                    Utility.toastLS(mContext, task.getException().getMessage());
-                }
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                reference.child("class").child(modelStudentClass.getStudent_class())
+                        .orderByChild("year_school")
+                        .equalTo(newYear).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                        if (snapshot1.exists() && snapshot.exists()){
+                            Utility.toastLS(mContext, "Kelas sudah tersedia");
+                        }else {
+                            reference.child("class")
+                                    .child(modelStudentClass.getStudent_class())
+                                    .child(modelStudentClass.getKey()).setValue(studentClass)
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()){
+                                            Utility.toastLS(mContext, "Data berhasil diubah");
+                                        }else {
+                                            Utility.toastLS(mContext, task.getException().getMessage());
+                                        }
+                                    });
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Utility.toastLS(mContext, "Database :"+error.getMessage());
+                    }
+                });
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Utility.toastLS(mContext, "Database :"+error.getMessage());
             }
         });
     }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -104,11 +105,37 @@ public class ManageStudentClass extends AppCompatActivity {
             }else if (sub_class.isEmpty()){
                 subClassAddTi.setError("Sub kelas kosong");
             }else {
-                saveDataClass(sub_class, yearSchool);
+                checkDataClass(sub_class, yearSchool);
             }
             bottomSheetDialog.dismiss();
         });
         bottomSheetDialog.setContentView(viewBottomDialog);
+    }
+
+    private void checkDataClass(String subClass, String yearSchool){
+        reference.child("class").child(student_class).orderByChild("sub_student_class").equalTo(subClass).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                reference.child("class").child(student_class).orderByChild("year_school").equalTo(yearSchool).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                        if (snapshot1.exists() && snapshot.exists()){
+                            Utility.toastLS(ManageStudentClass.this, "Kelas sudah tersedia");
+                        }else {
+                            saveDataClass(subClass, yearSchool);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Utility.toastLS(ManageStudentClass.this, "Database :"+error.getMessage());
+                    }
+                });
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Utility.toastLS(ManageStudentClass.this, "Database :"+error.getMessage());
+            }
+        });
     }
 
     private void saveDataClass(String subClass, String yearSchool){
@@ -137,6 +164,17 @@ public class ManageStudentClass extends AppCompatActivity {
                     modelStudentClass.setKey(ds.getKey());
                     listStudentClass.add(modelStudentClass);
                 }
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (listStudentClass.size() == 0){
+                            binding.warningNullText.setVisibility(View.VISIBLE);
+                        }else {
+                            binding.warningNullText.setVisibility(View.GONE);
+                        }
+                    }
+                }, 500);
                 adapterManageStudentClass = new AdapterManageStudentClass(ManageStudentClass.this, listStudentClass);
                 binding.recycleManageStudentClass.setAdapter(adapterManageStudentClass);
             }
