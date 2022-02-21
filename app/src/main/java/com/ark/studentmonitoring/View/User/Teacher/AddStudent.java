@@ -69,21 +69,15 @@ public class AddStudent extends AppCompatActivity {
                 binding.progressCircular.setVisibility(View.VISIBLE);
 
                 // check nisn
-                reference.child("student").addListenerForSingleValueEvent(new ValueEventListener() {
+                reference.child("student").orderByChild("nisn").equalTo(nisn).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ds : snapshot.getChildren()){
-                            ModelStudent modelStudent = ds.getValue(ModelStudent.class);
-                            modelStudent.setKey(ds.getKey());
-                            if (modelStudent.getNisn().equals(nisn)){
-                                Utility.toastLS(AddStudent.this, "NISN sudah digunakan");
-                                binding.progressCircular.setVisibility(View.GONE);
-                                return;
-                            }else {
-                                // save data
-                                saveDataStudent(name, nisn, studentNowClass, age, gender, diagnosa);
-                                break;
-                            }
+                        if (snapshot.exists()){
+                            Utility.toastLS(AddStudent.this, "NISN sudah digunakan");
+                            binding.progressCircular.setVisibility(View.GONE);
+                        }else {
+                            // save data
+                            saveDataStudent(name, nisn, studentNowClass, age, gender, diagnosa);
                         }
                     }
                     @Override
