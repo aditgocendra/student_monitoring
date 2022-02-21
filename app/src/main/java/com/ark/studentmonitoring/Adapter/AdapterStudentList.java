@@ -76,17 +76,18 @@ public class AdapterStudentList extends RecyclerView.Adapter<AdapterStudentList.
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()){
                     ModelStudent modelStudent = task.getResult().getValue(ModelStudent.class);
-                    modelStudent.setKey(task.getResult().getKey());
+                    if (modelStudent != null){
+                        modelStudent.setKey(task.getResult().getKey());
 
-                    if (modelStudent.getGender().equals("Laki-laki")){
-                        holder.iconImage.setImageResource(R.drawable.man_student);
-                    }else {
-                        holder.iconImage.setImageResource(R.drawable.women_student);
+                        if (modelStudent.getGender().equals("Laki-laki")){
+                            holder.iconImage.setImageResource(R.drawable.man_student);
+                        }else {
+                            holder.iconImage.setImageResource(R.drawable.women_student);
+                        }
+
+                        holder.nameStudent.setText("Nama : "+Utility.capitalizeWord(modelStudent.getName()));
+                        holder.nisnStudent.setText("Kelas : "+modelStudent.getNisn());
                     }
-
-                    holder.nameStudent.setText("Nama : "+Utility.capitalizeWord(modelStudent.getName()));
-                    holder.nisnStudent.setText("Kelas : "+modelStudent.getNisn());
-
                 }else {
                     Utility.toastLS(mContext, task.getException().getMessage());
                 }
