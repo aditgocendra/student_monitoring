@@ -168,6 +168,11 @@ public class AddStudentMyClass extends AppCompatActivity {
                   handler.postDelayed(new Runnable() {
                       @Override
                       public void run() {
+                          if (listModelStudent.size() == 0){
+                              binding.warningTextNull.setVisibility(View.VISIBLE);
+                          }else {
+                              binding.warningTextNull.setVisibility(View.GONE);
+                          }
                           adapterAddStudentMyClass = new AdapterAddStudentMyClass(AddStudentMyClass.this, listModelStudent, classStudent, keyClass, subClass);
                           binding.recycleAddStudentClass.setAdapter(adapterAddStudentMyClass);
                           dataLoad = maxLoadData;

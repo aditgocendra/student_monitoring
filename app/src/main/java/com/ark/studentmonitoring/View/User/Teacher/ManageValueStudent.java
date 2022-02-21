@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+
 import com.ark.studentmonitoring.Adapter.AdapterManageValueStudent;
 import com.ark.studentmonitoring.Model.ModelStudentClass;
 import com.ark.studentmonitoring.Utility;
@@ -66,8 +69,17 @@ public class ManageValueStudent extends AppCompatActivity {
                         }
                     }
                 }
-                adapterManageValueStudent = new AdapterManageValueStudent(ManageValueStudent.this, listStudentClass);
-                binding.recycleManageValueStudent.setAdapter(adapterManageValueStudent);
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    if (listStudentClass.size() == 0){
+                        binding.warningNullText.setVisibility(View.VISIBLE);
+                    }else {
+                        binding.warningNullText.setVisibility(View.GONE);
+                    }
+                    adapterManageValueStudent = new AdapterManageValueStudent(ManageValueStudent.this, listStudentClass);
+                    binding.recycleManageValueStudent.setAdapter(adapterManageValueStudent);
+                }, 500);
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

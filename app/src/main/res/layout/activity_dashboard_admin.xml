@@ -85,6 +85,7 @@
                                 android:src="@drawable/ic_count_child" />
 
                             <TextView
+                                android:id="@+id/text_count_student"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_medium"
@@ -118,6 +119,7 @@
                                 android:src="@drawable/ic_class_student" />
 
                             <TextView
+                                android:id="@+id/text_count_class"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_medium"

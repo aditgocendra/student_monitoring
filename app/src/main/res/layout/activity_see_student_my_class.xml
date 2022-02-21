@@ -53,6 +53,18 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/layout_manage_student"/>
 
+        <TextView
+            android:id="@+id/warning_text_null"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:text="Belum ada satupun siswa"
+            android:textSize="12sp"
+            android:textColor="@color/purple_200"
+            android:fontFamily="@font/poppins_medium"
+            android:textAlignment="center"
+            android:layout_margin="16dp"/>
+
 
     </LinearLayout>
 

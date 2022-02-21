@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -13,8 +12,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-
-import com.ark.studentmonitoring.Adapter.AdapterSeeStudentMyClass;
 import com.ark.studentmonitoring.Adapter.AdapterStudentChoice;
 import com.ark.studentmonitoring.Model.ModelStudent;
 import com.ark.studentmonitoring.Model.ModelStudentInClass;
@@ -26,7 +23,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -165,6 +161,11 @@ public class StudentChoice extends AppCompatActivity {
                 Log.d("test", String.valueOf(listStudent.size()));
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
+                    if (listStudent.size() == 0){
+                        binding.warningTextNull.setVisibility(View.VISIBLE);
+                    }else {
+                        binding.warningTextNull.setVisibility(View.GONE);
+                    }
                     adapterStudentChoice = new AdapterStudentChoice(StudentChoice.this, listStudent, classStudent, subClass, keyClass);
                     binding.recycleStudentChoice.setAdapter(adapterStudentChoice);
                     dataLoad = maxLoadData;

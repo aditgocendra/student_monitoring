@@ -165,9 +165,15 @@ public class SeeStudentMyClass extends AppCompatActivity {
                 Log.d("test1", String.valueOf(listStudent.size()));
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
+                    if (listStudent.size() == 0){
+                        binding.warningTextNull.setVisibility(View.VISIBLE);
+                    }else {
+                        binding.warningTextNull.setVisibility(View.GONE);
+                    }
                     adapterSeeStudentMyClass = new AdapterSeeStudentMyClass(SeeStudentMyClass.this, listStudent, classStudent, keyClass);
                     binding.recycleSeeStudentClass.setAdapter(adapterSeeStudentMyClass);
                     dataLoad = maxLoadData;
+
                 }, 1000);
 
                 Log.d("test2", "adapter set");

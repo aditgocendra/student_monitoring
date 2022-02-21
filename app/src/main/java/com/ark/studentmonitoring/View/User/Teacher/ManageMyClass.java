@@ -7,22 +7,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.Toast;
-
 import com.ark.studentmonitoring.Adapter.AdapterManageMyClass;
 import com.ark.studentmonitoring.Model.ModelMyClass;
-import com.ark.studentmonitoring.Model.ModelStudent;
 import com.ark.studentmonitoring.Model.ModelStudentClass;
-import com.ark.studentmonitoring.Model.ModelYearSchool;
 import com.ark.studentmonitoring.R;
 import com.ark.studentmonitoring.Utility;
-
-import com.ark.studentmonitoring.View.User.Administrator.ManageStudentClass;
 import com.ark.studentmonitoring.databinding.ActivityManageMyClassBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -88,8 +82,19 @@ public class ManageMyClass extends AppCompatActivity {
                         }
                     }
                 }
-                adapterManageMyClass = new AdapterManageMyClass(ManageMyClass.this, listStudentClass);
-                binding.recycleManageMyClass.setAdapter(adapterManageMyClass);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (listStudentClass.size() == 0){
+                            binding.warningNullText.setVisibility(View.VISIBLE);
+                        }else {
+                            binding.warningNullText.setVisibility(View.GONE);
+                        }
+                        adapterManageMyClass = new AdapterManageMyClass(ManageMyClass.this, listStudentClass);
+                        binding.recycleManageMyClass.setAdapter(adapterManageMyClass);
+                    }
+                },500);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -103,7 +108,6 @@ public class ManageMyClass extends AppCompatActivity {
         AutoCompleteTextView autoCompleteChoiceClass = viewBottomDialog.findViewById(R.id.auto_complete_choice_class);
         AutoCompleteTextView autoCompleteChoiceSubClass = viewBottomDialog.findViewById(R.id.auto_complete_choice_sub_class);
         TextInputLayout layoutSubClass = viewBottomDialog.findViewById(R.id.layout_sub_class);
-
 
         String[] choiceClass = {"1", "2", "3","4","5","6"};
 
