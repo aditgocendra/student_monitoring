@@ -203,10 +203,33 @@ public class AdapterManageStudentClass extends RecyclerView.Adapter<AdapterManag
                 .child(modelStudentClass.getKey())
                 .removeValue().addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
-                        Utility.toastLS(mContext, "Data berhasil dihapus");
+                        deleteClassValueStudent(modelStudentClass);
+
                     }else {
                         Utility.toastLS(mContext, "Gagal menghapus data");
                     }
                 });
+    }
+
+
+    private void deleteClassValueStudent(ModelStudentClass modelStudentClass){
+        reference.child("value_student").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    for (DataSnapshot ds1 : ds.getChildren()){
+                        if (ds1.getKey().equals(modelStudentClass.getKey())){
+                            ds1.getRef().removeValue();
+                            reference.child("student_in_class").child(modelStudentClass.getStudent_class()).removeValue();
+                            Utility.toastLS(mContext, "Data berhasil dihapus");
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Utility.toastLS(mContext, "Database :"+error.getMessage());
+            }
+        });
     }
 }
