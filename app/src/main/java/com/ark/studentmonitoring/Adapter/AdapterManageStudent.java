@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -196,6 +197,8 @@ public class AdapterManageStudent extends RecyclerView.Adapter<AdapterManageStud
         reference.child("student").child(key).removeValue().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 Utility.toastLS(mContext, "Data berhasil dihapus");
+                ((AppCompatActivity)mContext).finish();
+                mContext.startActivity(((AppCompatActivity) mContext).getIntent());
             }else {
                 Utility.toastLS(mContext, "Data gagal dihapus");
             }
