@@ -61,7 +61,7 @@ public class AdapterAddStudentMyClass extends RecyclerView.Adapter<AdapterAddStu
         }else {
             holder.iconImage.setImageResource(R.drawable.women_student);
         }
-        holder.textName.setText("Nama : "+modelStudent.getName());
+        holder.textName.setText("Nama : "+Utility.capitalizeWord(modelStudent.getName()));
         holder.textNisn.setText("NISN : "+modelStudent.getNisn());
 
         holder.cardStudent.setOnClickListener(view -> {
