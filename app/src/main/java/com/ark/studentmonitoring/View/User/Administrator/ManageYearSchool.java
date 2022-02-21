@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.ark.studentmonitoring.Adapter.AdapterManageYearSchool;
@@ -72,7 +73,8 @@ public class ManageYearSchool extends AppCompatActivity {
                 yearSchoolTiTo.setError("TahuTahun Ajaran sampai kosong");
             }else {
                 binding.progressCircular.setVisibility(View.VISIBLE);
-                saveDataYearSchool(yearAddFrom, yearAddTo);
+                checkDataYear(yearAddFrom, yearAddTo);
+
             }
             bottomSheetDialog.dismiss();
         });
@@ -113,6 +115,25 @@ public class ManageYearSchool extends AppCompatActivity {
                 Utility.toastLS(ManageYearSchool.this, task.getException().getMessage());
             }
             binding.progressCircular.setVisibility(View.GONE);
+        });
+    }
+
+    private void checkDataYear(String from_year, String to_year){
+        reference.child("year_school").orderByChild("from_year").equalTo(from_year).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    Utility.toastLS(ManageYearSchool.this, "Tahun ajaran telah digunakan");
+                    binding.progressCircular.setVisibility(View.GONE);
+                }else {
+                    saveDataYearSchool(from_year, to_year);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
     }
 

@@ -15,8 +15,11 @@ import com.ark.studentmonitoring.R;
 import com.ark.studentmonitoring.Utility;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -126,18 +129,34 @@ public class AdapterManageYearSchool extends RecyclerView.Adapter<AdapterManageY
     private void changeDataYearSchool(ModelYearSchool modelYearSchool, String yearFrom, String yearTo){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-        ModelYearSchool yearSchool = new ModelYearSchool(
-                yearFrom,
-                yearTo
-        );
+        reference.child("year_school").orderByChild("from_year").equalTo(yearFrom).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    Utility.toastLS(mContext, "Tahun ajaran telah digunakan");
+                }else {
+                    ModelYearSchool yearSchool = new ModelYearSchool(
+                            yearFrom,
+                            yearTo
+                    );
 
-        reference.child("year_school").child(modelYearSchool.getKey()).setValue(yearSchool).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                Utility.toastLS(mContext, "Tahun ajaran berhasil diubah");
-            }else {
-                Utility.toastLS(mContext, "Tahun ajaran gagal diubah");
+                    reference.child("year_school").child(modelYearSchool.getKey()).setValue(yearSchool).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()){
+                            Utility.toastLS(mContext, "Tahun ajaran berhasil diubah");
+                        }else {
+                            Utility.toastLS(mContext, "Tahun ajaran gagal diubah");
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Utility.toastLS(mContext, "Database : "+error.getMessage());
             }
         });
+
+
     }
 
     private void deleteDataYearSchool(String key){
