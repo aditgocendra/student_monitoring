@@ -44,8 +44,9 @@ public class AddStudentMyClass extends AppCompatActivity {
     private AdapterAddStudentMyClass adapterAddStudentMyClass;
 
     private final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-    private int maxLoadData = 10;
+    private int maxLoadData = 5;
     private long countData;
+    private long dataLoad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,18 +114,20 @@ public class AddStudentMyClass extends AppCompatActivity {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (binding.searchStudentByName.getText().toString().isEmpty()){
                     if (!binding.recycleAddStudentClass.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE){
-                        Log.d("Current data", String.valueOf(listModelStudent.size())+" / "+countData);
-                        if (listModelStudent.size() < countData){
-                            if (listModelStudent.size() + maxLoadData <= countData){
-                                int startData = (int) (countData - listModelStudent.size());
+                        Log.d("Current data", String.valueOf(dataLoad)+" / "+countData);
+                        if (dataLoad < countData){
+                            if (dataLoad + maxLoadData <= countData){
+                                int startData = (int) (countData - dataLoad);
                                 int endData = startData - maxLoadData;
                                 nextLoadData(maxLoadData, startData + 1 , endData);
+                                dataLoad += maxLoadData;
                                 Log.d("Bottom Scrolled", "Load Next Data");
                             }else {
-                                int calculateNextLoad = (int) (countData - listModelStudent.size());
-                                int startData = (int) (countData - listModelStudent.size());
+                                int calculateNextLoad = (int) (countData - dataLoad);
+                                int startData = (int) (countData - dataLoad);
                                 int endData = startData - calculateNextLoad;
                                 nextLoadData(calculateNextLoad, startData + 1, endData);
+                                dataLoad += calculateNextLoad;
                                 Log.d("Calculate next load", String.valueOf(calculateNextLoad));
                             }
                         }
@@ -167,8 +170,50 @@ public class AddStudentMyClass extends AppCompatActivity {
                       public void run() {
                           adapterAddStudentMyClass = new AdapterAddStudentMyClass(AddStudentMyClass.this, listModelStudent, classStudent, keyClass, subClass);
                           binding.recycleAddStudentClass.setAdapter(adapterAddStudentMyClass);
+                          dataLoad = maxLoadData;
                       }
                   },1000);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Utility.toastLS(AddStudentMyClass.this, error.getMessage());
+            }
+        });
+    }
+
+    private void nextLoadData(int limitNextLoad, int startIndex, int endIndex) {
+        Log.d("scroll", String.valueOf(startIndex)+" / "+endIndex);
+        reference.child("student").orderByChild("index_student").startAfter(endIndex).endBefore(startIndex).limitToLast(limitNextLoad).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    ModelStudent modelStudent = ds.getValue(ModelStudent.class);
+                    modelStudent.setKey(ds.getKey());
+
+                    reference
+                            .child("student_in_class")
+                            .child(classStudent)
+                            .child(keyClass).child(modelStudent.getKey()).get().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()){
+                            ModelStudentInClass modelStudentInClass = task.getResult().getValue(ModelStudentInClass.class);
+                            if (modelStudentInClass == null){
+                                listModelStudent.add(modelStudent);
+                            }
+                        }else {
+                            Utility.toastLS(AddStudentMyClass.this, "Data gagal dimuat");
+                        }
+                    });
+                }
+                Log.d("test1", String.valueOf(listModelStudent.size()));
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapterAddStudentMyClass.notifyDataSetChanged();
+                    }
+                },1000);
+
             }
 
             @Override
@@ -213,46 +258,6 @@ public class AddStudentMyClass extends AppCompatActivity {
                     adapterAddStudentMyClass = new AdapterAddStudentMyClass(AddStudentMyClass.this, listModelStudent, classStudent, keyClass, subClass);
                     binding.recycleAddStudentClass.setAdapter(adapterAddStudentMyClass);
                 },500);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Utility.toastLS(AddStudentMyClass.this, error.getMessage());
-            }
-        });
-    }
-
-    private void nextLoadData(int limitNextLoad, int startIndex, int endIndex) {
-        reference.child("student").orderByChild("index_student").startAfter(endIndex).endBefore(startIndex).limitToLast(limitNextLoad).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()){
-                    ModelStudent modelStudent = ds.getValue(ModelStudent.class);
-                    modelStudent.setKey(ds.getKey());
-
-                    reference
-                            .child("student_in_class")
-                            .child(classStudent)
-                            .child(keyClass).child(modelStudent.getKey()).get().addOnCompleteListener(task -> {
-                        if (task.isSuccessful()){
-                            ModelStudentInClass modelStudentInClass = task.getResult().getValue(ModelStudentInClass.class);
-                            if (modelStudentInClass == null){
-                                listModelStudent.add(modelStudent);
-                            }
-                        }else {
-                            Utility.toastLS(AddStudentMyClass.this, "Data gagal dimuat");
-                        }
-                    });
-                }
-                Log.d("test1", String.valueOf(listModelStudent.size()));
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapterAddStudentMyClass.notifyDataSetChanged();
-                    }
-                },1000);
-
             }
 
             @Override

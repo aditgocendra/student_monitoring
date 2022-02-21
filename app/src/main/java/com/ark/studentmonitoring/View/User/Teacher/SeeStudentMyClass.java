@@ -20,6 +20,7 @@ import com.ark.studentmonitoring.Model.ModelStudent;
 import com.ark.studentmonitoring.Model.ModelStudentInClass;
 import com.ark.studentmonitoring.Utility;
 import com.ark.studentmonitoring.databinding.ActivitySeeStudentMyClassBinding;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SeeStudentMyClass extends AppCompatActivity {
 
@@ -36,6 +38,11 @@ public class SeeStudentMyClass extends AppCompatActivity {
 
     private AdapterSeeStudentMyClass adapterSeeStudentMyClass;
     private List<ModelStudent> listStudent;
+
+    private final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+    private int maxLoadData = 10;
+    private long countData;
+    private long dataLoad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +55,16 @@ public class SeeStudentMyClass extends AppCompatActivity {
         classStudent = getIntent().getStringExtra("class");
         keyClass = getIntent().getStringExtra("key_class");
 
-        listenerClick();
+
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        binding.recycleSeeStudentClass.setHasFixedSize(true);
         binding.recycleSeeStudentClass.setLayoutManager(layoutManager);
         binding.recycleSeeStudentClass.setItemAnimator(new DefaultItemAnimator());
 
-        setDataStudentMyClass();
+        reference.child("student").get().addOnCompleteListener(this::setDataStudentMyClass);
+
+        listenerClick();
+
     }
 
     private void listenerClick() {
@@ -68,14 +77,19 @@ public class SeeStudentMyClass extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
                 if (charSequence.length() == 0){
-                    setDataStudentMyClass();
+                    reference.child("student").get().addOnCompleteListener(this::setDataStudentAfterSearch);
                 }else {
                     String keySearch = binding.searchStudentByName.getText().toString();
                     searchDataStudentMyClass(keySearch);
                 }
             }
+
+            private void setDataStudentAfterSearch(Task<DataSnapshot> task) {
+                setDataStudentMyClass(task);
+            }
+
+
             @Override
             public void afterTextChanged(Editable editable) {
 
@@ -91,11 +105,40 @@ public class SeeStudentMyClass extends AppCompatActivity {
             return handled;
         });
 
+        binding.recycleSeeStudentClass.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (binding.searchStudentByName.getText().toString().isEmpty()){
+                    if (!binding.recycleSeeStudentClass.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE){
+                        Log.d("Current data", String.valueOf(dataLoad)+" / "+countData);
+                        if (dataLoad < countData){
+                            if (dataLoad + maxLoadData <= countData){
+                                int startData = (int) (countData - dataLoad);
+                                int endData = startData - maxLoadData;
+                                nextLoadData(maxLoadData, startData + 1 , endData);
+                                dataLoad += maxLoadData;
+                                Log.d("Bottom Scrolled", "Load Next Data");
+                            }else {
+                                int calculateNextLoad = (int) (countData - dataLoad);
+                                int startData = (int) (countData - dataLoad);
+                                int endData = startData - calculateNextLoad;
+                                nextLoadData(calculateNextLoad, startData + 1, endData);
+                                dataLoad += calculateNextLoad;
+                                Log.d("Calculate next load", String.valueOf(calculateNextLoad));
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
     }
 
-    private void setDataStudentMyClass() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("student").limitToLast(10).addValueEventListener(new ValueEventListener() {
+
+    private void setDataStudentMyClass(Task<DataSnapshot> taskCount) {
+        countData = Objects.requireNonNull(taskCount.getResult()).getChildrenCount();
+        reference.child("student").orderByChild("index_student").startAfter(countData - maxLoadData).limitToLast(maxLoadData).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listStudent = new ArrayList<>();
@@ -124,6 +167,7 @@ public class SeeStudentMyClass extends AppCompatActivity {
                 handler.postDelayed(() -> {
                     adapterSeeStudentMyClass = new AdapterSeeStudentMyClass(SeeStudentMyClass.this, listStudent, classStudent, keyClass);
                     binding.recycleSeeStudentClass.setAdapter(adapterSeeStudentMyClass);
+                    dataLoad = maxLoadData;
                 }, 1000);
 
                 Log.d("test2", "adapter set");
@@ -137,7 +181,6 @@ public class SeeStudentMyClass extends AppCompatActivity {
     }
 
     private void searchDataStudentMyClass(String keyword) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child("student").orderByChild("name").startAt(keyword).endAt(keyword + "\uf8ff").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -168,6 +211,46 @@ public class SeeStudentMyClass extends AppCompatActivity {
                     binding.recycleSeeStudentClass.setAdapter(adapterSeeStudentMyClass);
                 }, 500);
             }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Utility.toastLS(SeeStudentMyClass.this, error.getMessage());
+            }
+        });
+    }
+
+    private void nextLoadData(int limitNextLoad, int startIndex, int endIndex) {
+        reference.child("student").orderByChild("index_student").startAfter(endIndex).endBefore(startIndex).limitToLast(limitNextLoad).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    ModelStudent modelStudent = ds.getValue(ModelStudent.class);
+                    modelStudent.setKey(ds.getKey());
+
+                    reference
+                            .child("student_in_class")
+                            .child(classStudent)
+                            .child(keyClass).child(modelStudent.getKey()).get().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()){
+                            ModelStudentInClass modelStudentInClass = task.getResult().getValue(ModelStudentInClass.class);
+                            if (modelStudentInClass != null){
+                                listStudent.add(modelStudent);
+                            }
+                        }else {
+                            Utility.toastLS(SeeStudentMyClass.this, "Data gagal dimuat");
+                        }
+                    });
+                }
+                Log.d("test1", String.valueOf(listStudent.size()));
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapterSeeStudentMyClass.notifyDataSetChanged();
+                    }
+                },1000);
+
+            }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Utility.toastLS(SeeStudentMyClass.this, error.getMessage());
