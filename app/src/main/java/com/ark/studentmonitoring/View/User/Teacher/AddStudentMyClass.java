@@ -44,7 +44,7 @@ public class AddStudentMyClass extends AppCompatActivity {
     private AdapterAddStudentMyClass adapterAddStudentMyClass;
 
     private final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-    private int maxLoadData = 5;
+    private int maxLoadData = 10;
     private long countData;
     private long dataLoad;
 
