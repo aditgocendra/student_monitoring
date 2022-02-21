@@ -74,6 +74,23 @@ public class HomeApp extends AppCompatActivity {
             String keyStudent = binding.keyStudentCard.getText().toString();
 
             if (keyStudent.equals("-")){
+                //Create the Dialog here
+                dialog = new Dialog(HomeApp.this);
+                dialog.setContentView(R.layout.custom_dialog_warning);
+                dialog.getWindow().setBackgroundDrawable(HomeApp.this.getDrawable(R.drawable.custom_dialog_background));
+
+                dialog.getWindow().setLayout(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                dialog.setCancelable(false); //Optional
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
+
+                Button Okay = dialog.findViewById(R.id.btn_okay);
+                Okay.setOnClickListener(v -> {
+                    dialog.dismiss();
+                });
+
                 dialog.show();
             }else {
                 Intent intent = new Intent(HomeApp.this, ChildValue.class);
@@ -128,6 +145,7 @@ public class HomeApp extends AppCompatActivity {
                 ModelUser modelUser = task.getResult().getValue(ModelUser.class);
                 Utility.roleCurrentUser = modelUser.getRole();
                 Utility.usernameCurrentUser = modelUser.getUsername();
+                Log.d("Current set", Utility.uidCurrentUser+" / "+Utility.roleCurrentUser);
                 setLayoutWithRole();
             }else {
                 Utility.toastLS(HomeApp.this, task.getException().getMessage());
@@ -159,23 +177,6 @@ public class HomeApp extends AppCompatActivity {
                             }else {
                                 Utility.toastLS(HomeApp.this, task1.getException().getMessage());
                             }
-                        });
-                    }else {
-                        //Create the Dialog here
-                        dialog = new Dialog(HomeApp.this);
-                        dialog.setContentView(R.layout.custom_dialog_warning);
-                        dialog.getWindow().setBackgroundDrawable(HomeApp.this.getDrawable(R.drawable.custom_dialog_background));
-
-                        dialog.getWindow().setLayout(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT);
-
-                        dialog.setCancelable(false); //Optional
-                        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
-
-                        Button Okay = dialog.findViewById(R.id.btn_okay);
-                        Okay.setOnClickListener(v -> {
-                            dialog.dismiss();
                         });
                     }
                 }else {
