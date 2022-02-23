@@ -10,11 +10,15 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.ark.studentmonitoring.Adapter.AdapterChildValue;
+import com.ark.studentmonitoring.Model.ModelStudent;
 import com.ark.studentmonitoring.Model.ModelStudentInClass;
 import com.ark.studentmonitoring.Model.ModelValueStudent;
+import com.ark.studentmonitoring.R;
 import com.ark.studentmonitoring.Utility;
 import com.ark.studentmonitoring.View.User.HomeApp;
 import com.ark.studentmonitoring.databinding.ActivityChildValueBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +38,8 @@ public class ChildValue extends AppCompatActivity {
     private List<ModelValueStudent> listValueStudent;
     private AdapterChildValue adapterChildValue;
 
+    private final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +56,7 @@ public class ChildValue extends AppCompatActivity {
         binding.recycleChildValue.setLayoutManager(layoutManager);
         binding.recycleChildValue.setItemAnimator(new DefaultItemAnimator());
 
+        setDataStudent();
         setDataValueStudent();
 
     }
@@ -60,8 +67,22 @@ public class ChildValue extends AppCompatActivity {
         });
     }
 
+    private void setDataStudent(){
+        reference.child("student").child(keyStudent).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                ModelStudent modelStudent = task.getResult().getValue(ModelStudent.class);
+                binding.textNameStudent.setText(modelStudent.getName());
+
+                if (modelStudent.getGender().equals("Laki-laki")){
+                    binding.profileImg.setImageResource(R.drawable.man_student);
+                }else {
+                    binding.profileImg.setImageResource(R.drawable.women_student);
+                }
+            }
+        });
+    }
+
     private void setDataValueStudent(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child("value_student").child(keyStudent).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

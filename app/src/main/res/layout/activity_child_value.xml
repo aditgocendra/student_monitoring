@@ -63,6 +63,7 @@
                     android:src="@drawable/women_student" />
 
                 <TextView
+                    android:id="@+id/text_name_student"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Neshia Pasaratus"
