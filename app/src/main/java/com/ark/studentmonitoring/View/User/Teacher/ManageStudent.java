@@ -35,8 +35,9 @@ public class ManageStudent extends AppCompatActivity {
 
     private List<ModelStudent> listStudent;
     private AdapterManageStudent adapterManageStudent;
-    private int maxLoadData = 5;
+    private int maxLoadData = 10;
     private long countData;
+    private long dataLoad;
 
 
     private final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -61,19 +62,21 @@ public class ManageStudent extends AppCompatActivity {
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (!binding.recycleManageStudent.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE){
-                    Log.d("Current data", String.valueOf(listStudent.size())+" / "+countData);
-                    if (listStudent.size() < countData){
-                        if (listStudent.size() + maxLoadData <= countData){
-                            int startData = (int) (countData - listStudent.size());
+                    Log.d("Current data", String.valueOf(dataLoad)+" / "+countData);
+                    if (dataLoad < countData){
+                        if (dataLoad + maxLoadData <= countData){
+                            int startData = (int) (countData - dataLoad);
                             int endData = startData - maxLoadData;
                             nextLoadData(maxLoadData, startData + 1 , endData);
+                            dataLoad += maxLoadData;
                             Log.d("Bottom Scrolled", "Load Next Data");
                         }else {
-                            int calculateNextLoad = (int) (countData - listStudent.size());
-                            int startData = (int) (countData - listStudent.size());
+                            int calculateNextLoad = (int) (countData - dataLoad);
+                            int startData = (int) (countData - dataLoad);
                             int endData = startData - calculateNextLoad;
                             nextLoadData(calculateNextLoad, startData + 1, endData);
-                            Log.d("Calculate next load", String.valueOf(calculateNextLoad));
+                            dataLoad += calculateNextLoad;
+                            Log.d("Calculate next load", String.valueOf(calculateNextLoad+"/"+startData+1+"/"+endData));
                         }
                     }
                 }
@@ -101,6 +104,7 @@ public class ManageStudent extends AppCompatActivity {
                 }
                 adapterManageStudent = new AdapterManageStudent(ManageStudent.this, listStudent);
                 binding.recycleManageStudent.setAdapter(adapterManageStudent);
+                dataLoad = maxLoadData;
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
