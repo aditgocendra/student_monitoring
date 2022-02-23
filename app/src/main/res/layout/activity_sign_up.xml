@@ -78,14 +78,13 @@
                     android:background="@android:color/transparent"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="Username"
-                    android:textCursorDrawable="@drawable/cursor_input_color"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:paddingStart="17dp"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"
-
                     android:textColor="@color/gray"
+                    android:textCursorDrawable="@drawable/cursor_input_color"
                     android:textSize="12sp" />
 
                 <!--IMAGE-->
