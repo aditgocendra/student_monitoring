@@ -6,7 +6,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
-
 import com.ark.studentmonitoring.Model.ModelParent;
 import com.ark.studentmonitoring.Model.ModelStudent;
 import com.ark.studentmonitoring.Model.ModelTeacher;
@@ -18,8 +17,6 @@ import com.ark.studentmonitoring.View.Auth.SignIn;
 import com.ark.studentmonitoring.View.User.Administrator.DashboardAdmin;
 import com.ark.studentmonitoring.View.User.Teacher.DashboardTeacher;
 import com.ark.studentmonitoring.databinding.ActivityProfileBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -62,6 +59,7 @@ public class Profile extends AppCompatActivity {
 
         if (Utility.roleCurrentUser.equals("admin")){
             binding.administratorBtn.setVisibility(View.VISIBLE);
+            binding.teacherBtn.setVisibility(View.VISIBLE);
         }
 
         if (Utility.roleCurrentUser.equals("teacher")){
