@@ -2,6 +2,7 @@ package com.ark.studentmonitoring.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +18,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ark.studentmonitoring.Model.ModelStudent;
+import com.ark.studentmonitoring.Model.ModelStudentClass;
 import com.ark.studentmonitoring.Model.ModelStudentInClass;
 import com.ark.studentmonitoring.Model.ModelValueStudent;
 import com.ark.studentmonitoring.R;
 import com.ark.studentmonitoring.Utility;
+import com.ark.studentmonitoring.View.User.Chatting.PersonalChat;
 import com.ark.studentmonitoring.View.User.Parent.ChildValue;
+import com.ark.studentmonitoring.View.User.Parent.StudentList;
 import com.ark.studentmonitoring.View.User.Teacher.ValueStudent;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
@@ -32,6 +39,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AdapterChildValue extends RecyclerView.Adapter<AdapterChildValue.MyViewHolder> {
 
@@ -39,16 +47,18 @@ public class AdapterChildValue extends RecyclerView.Adapter<AdapterChildValue.My
     private List<ModelValueStudent> listValueStudents;
     private String keyStudent;
     private String keyClass;
+    private String studentClass;
 
 
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
     private BottomSheetDialog bottomSheetDialog;
 
-    public AdapterChildValue(Context mContext, List<ModelValueStudent> listValueStudents, String keyStudent, String keyClass) {
+    public AdapterChildValue(Context mContext, List<ModelValueStudent> listValueStudents, String keyStudent, String keyClass, String studentClass) {
         this.mContext = mContext;
         this.listValueStudents = listValueStudents;
         this.keyStudent = keyStudent;
         this.keyClass = keyClass;
+        this.studentClass = studentClass;
     }
 
     @NonNull
@@ -72,33 +82,41 @@ public class AdapterChildValue extends RecyclerView.Adapter<AdapterChildValue.My
             holder.cardDelete.setVisibility(View.GONE);
         }
 
-
-        holder.cardDelete.setOnClickListener(new View.OnClickListener() {
+        holder.cardChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Create the Dialog here
-                Dialog dialog = new Dialog(mContext);
-                dialog.setContentView(R.layout.custom_dialog_delete);
-                dialog.getWindow().setBackgroundDrawable(mContext.getDrawable(R.drawable.custom_dialog_background));
-
-                dialog.getWindow().setLayout(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-
-                dialog.setCancelable(false); //Optional
-                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
-
-                Button Okay = dialog.findViewById(R.id.btn_okay);
-                Button Cancel = dialog.findViewById(R.id.btn_cancel);
-
-                dialog.show();
-                Okay.setOnClickListener(v -> {
-                    deleteValueStudent(modelValueStudent.getKey());
-                    dialog.dismiss();
-                });
-
-                Cancel.setOnClickListener(v -> dialog.dismiss());
+                if (Utility.roleCurrentUser.equals("parent")){
+                    chatToTeacher();
+                }else {
+                    chatToParent();
+                }
             }
+        });
+
+
+        holder.cardDelete.setOnClickListener(view -> {
+            //Create the Dialog here
+            Dialog dialog = new Dialog(mContext);
+            dialog.setContentView(R.layout.custom_dialog_delete);
+            dialog.getWindow().setBackgroundDrawable(mContext.getDrawable(R.drawable.custom_dialog_background));
+
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            dialog.setCancelable(false); //Optional
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
+
+            Button Okay = dialog.findViewById(R.id.btn_okay);
+            Button Cancel = dialog.findViewById(R.id.btn_cancel);
+
+            dialog.show();
+            Okay.setOnClickListener(v -> {
+                deleteValueStudent(modelValueStudent.getKey());
+                dialog.dismiss();
+            });
+
+            Cancel.setOnClickListener(v -> dialog.dismiss());
         });
 
         holder.cardEdit.setOnClickListener(view -> {
@@ -109,6 +127,8 @@ public class AdapterChildValue extends RecyclerView.Adapter<AdapterChildValue.My
 
     }
 
+
+
     @Override
     public int getItemCount() {
         return listValueStudents.size();
@@ -116,13 +136,14 @@ public class AdapterChildValue extends RecyclerView.Adapter<AdapterChildValue.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView classStudent, dateValue, valueStudent, desc;
-        CardView cardEdit, cardDelete;
+        CardView cardEdit, cardDelete, cardChat;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             classStudent = itemView.findViewById(R.id.class_student);
             valueStudent = itemView.findViewById(R.id.value_student);
             dateValue = itemView.findViewById(R.id.date_value);
             desc = itemView.findViewById(R.id.description_value);
+            cardChat = itemView.findViewById(R.id.card_chat_btn);
             cardEdit = itemView.findViewById(R.id.card_edit_value_student);
             cardDelete = itemView.findViewById(R.id.card_delete_value_student);
         }
@@ -227,6 +248,53 @@ public class AdapterChildValue extends RecyclerView.Adapter<AdapterChildValue.My
             }else {
                 Utility.toastLS(mContext, task.getException().getMessage());
 
+            }
+        });
+    }
+
+    private void chatToTeacher(){
+        reference.child("class").child(studentClass).child(keyClass).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                ModelStudentClass modelStudentClass = task.getResult().getValue(ModelStudentClass.class);
+                if (modelStudentClass != null){
+                    Intent intent = new Intent(mContext, PersonalChat.class);
+                    intent.putExtra("key", modelStudentClass.getTeacher());
+                    mContext.startActivity(intent);
+                }else {
+                    Toast.makeText(mContext, "Data guru kosong", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                Toast.makeText(mContext, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void chatToParent() {
+        reference.child("user_detail").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int i = 0;
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    String keyStudentParent = ds.child("key_student").getValue(String.class);
+                    if (keyStudentParent != null){
+                        if (keyStudentParent.equals(keyStudent)){
+                            Intent intent = new Intent(mContext, PersonalChat.class);
+                            intent.putExtra("key", ds.getKey());
+                            mContext.startActivity(intent);
+                            i +=1;
+                            break;
+                        }
+                    }
+                }
+
+                if (i == 0){
+                    Toast.makeText(mContext, "Data orang tua pada anak ini, belum ada", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(mContext, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -19,6 +19,7 @@ import com.ark.studentmonitoring.Model.ModelUser;
 import com.ark.studentmonitoring.NetworkChangeListener;
 import com.ark.studentmonitoring.R;
 import com.ark.studentmonitoring.Utility;
+import com.ark.studentmonitoring.View.User.Chatting.ListChat;
 import com.ark.studentmonitoring.View.User.Parent.ChildValue;
 import com.ark.studentmonitoring.View.User.Parent.ClassList;
 import com.ark.studentmonitoring.View.User.Parent.SearchViewStudent;
@@ -137,6 +138,8 @@ public class HomeApp extends AppCompatActivity {
             intent.putExtra("class", "6");
             startActivity(intent);
         });
+
+        binding.cardChat.setOnClickListener(view -> Utility.updateUI(HomeApp.this, ListChat.class));
     }
 
     private void setRoleUserCurrent(){

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.ark.studentmonitoring.Adapter.AdapterChildValue;
 import com.ark.studentmonitoring.Model.ModelStudent;
@@ -34,11 +35,13 @@ public class ChildValue extends AppCompatActivity {
 
     private String keyStudent;
     private String keyClass;
+    private String studentClass;
 
     private List<ModelValueStudent> listValueStudent;
     private AdapterChildValue adapterChildValue;
 
     private final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class ChildValue extends AppCompatActivity {
 
         keyStudent = getIntent().getStringExtra("key_student");
         keyClass = getIntent().getStringExtra("key_class");
+        studentClass = getIntent().getStringExtra("class");
 
         listenerClick();
 
@@ -65,6 +69,8 @@ public class ChildValue extends AppCompatActivity {
         binding.backBtn.setOnClickListener(view -> {
             finish();
         });
+
+
     }
 
     private void setDataStudent(){
@@ -97,7 +103,7 @@ public class ChildValue extends AppCompatActivity {
 
                 }
 
-                adapterChildValue = new AdapterChildValue(ChildValue.this, listValueStudent, keyStudent, keyClass);
+                adapterChildValue = new AdapterChildValue(ChildValue.this, listValueStudent, keyStudent, keyClass, studentClass);
                 binding.recycleChildValue.setAdapter(adapterChildValue);
             }
 

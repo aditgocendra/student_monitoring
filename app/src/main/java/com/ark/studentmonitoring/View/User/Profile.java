@@ -78,7 +78,6 @@ public class Profile extends AppCompatActivity {
 
     private void listenerClick() {
         binding.backBtn.setOnClickListener(view -> {
-            Utility.updateUI(Profile.this, HomeApp.class);
             finish();
         });
 
@@ -248,7 +247,6 @@ public class Profile extends AppCompatActivity {
                     binding.fullnameTeacherTi.setText(modelTeacher.getFull_name());
                     binding.nipGuruTi.setText(modelTeacher.getNip());
                 }
-
             }else {
                 Utility.toastLS(Profile.this, task.getException().getMessage());
             }
@@ -291,12 +289,5 @@ public class Profile extends AppCompatActivity {
                 Utility.toastLS(Profile.this, "Database : "+error.getMessage());
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Utility.updateUI(Profile.this, HomeApp.class);
-        finish();
     }
 }

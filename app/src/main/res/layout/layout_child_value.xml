@@ -106,6 +106,22 @@
             android:layout_gravity="end">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_chat_btn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:cardCornerRadius="3dp"
+                android:layout_margin="3dp"
+                app:cardElevation="2dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_chat"
+                    android:layout_gravity="center"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/card_edit_value_student"
                 android:layout_width="32dp"
                 android:layout_height="32dp"

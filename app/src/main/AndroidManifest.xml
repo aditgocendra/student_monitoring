@@ -11,11 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StudentMonitoring">
-
+        <activity
+            android:name=".View.User.Chatting.PersonalChat"
+            android:exported="false"/>
+        <activity
+            android:name=".View.User.Chatting.ListChat"
+            android:exported="false" />
         <activity
             android:name=".View.User.Teacher.SeeStudentMyClass"
             android:exported="false" />
-
         <activity
             android:name=".View.User.Teacher.AddStudentMyClass"
             android:exported="false" />

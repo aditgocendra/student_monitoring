@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.ark.studentmonitoring.Adapter.AdapterStudentList;
 import com.ark.studentmonitoring.Model.ModelStudentInClass;
 import com.ark.studentmonitoring.Model.ModelTeacher;
 import com.ark.studentmonitoring.Utility;
+import com.ark.studentmonitoring.View.User.Chatting.PersonalChat;
 import com.ark.studentmonitoring.databinding.ActivityStudentListBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -63,6 +65,12 @@ public class StudentList extends AppCompatActivity {
             finish();
         });
 
+        binding.sendChatTeacher.setOnClickListener(view -> {
+            Intent intent = new Intent(StudentList.this, PersonalChat.class);
+            intent.putExtra("key", keyTeacher);
+            startActivity(intent);
+        });
+
     }
 
     private void setDataTeacher() {
@@ -73,6 +81,7 @@ public class StudentList extends AppCompatActivity {
                     if (modelTeacher != null){
                         binding.nameTeacher.setText(modelTeacher.getFull_name());
                         binding.nameTeacher.setVisibility(View.VISIBLE);
+                        binding.sendChatTeacher.setVisibility(View.VISIBLE);
                     }else {
                         binding.nameTeacher.setVisibility(View.GONE);
                     }
@@ -84,7 +93,6 @@ public class StudentList extends AppCompatActivity {
     }
 
     private void setDataListStudent() {
-
         reference.child("student_in_class").child(classStudent).child(keyClass).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -103,9 +111,5 @@ public class StudentList extends AppCompatActivity {
 
             }
         });
-
-
     }
-
-
 }

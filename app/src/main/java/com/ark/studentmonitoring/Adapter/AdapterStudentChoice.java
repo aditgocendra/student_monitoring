@@ -77,6 +77,7 @@ public class AdapterStudentChoice extends RecyclerView.Adapter<AdapterStudentCho
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, ChildValue.class);
                 intent.putExtra("key_student", modelStudent.getKey());
+                intent.putExtra("class", classStudent);
                 intent.putExtra("key_class", keyClass);
                 mContext.startActivity(intent);
             }

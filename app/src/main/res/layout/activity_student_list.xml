@@ -86,6 +86,45 @@
             </RelativeLayout>
 
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/send_chat_teacher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:cardCornerRadius="6dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/ic_chat"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kirim pesan pada guru"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="12sp"
+                        android:textColor="@color/purple_custom"
+                        android:includeFontPadding="false"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        />
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycle_student_list"
                 android:layout_width="match_parent"

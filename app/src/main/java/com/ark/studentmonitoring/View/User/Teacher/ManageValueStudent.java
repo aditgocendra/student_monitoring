@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import com.ark.studentmonitoring.Adapter.AdapterManageValueStudent;
@@ -63,10 +64,14 @@ public class ManageValueStudent extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()){
                     for (DataSnapshot dataSnapshot : ds.getChildren()){
                         ModelStudentClass modelStudentClass = dataSnapshot.getValue(ModelStudentClass.class);
-                        modelStudentClass.setKey(dataSnapshot.getKey());
-                        if (modelStudentClass.getTeacher().equals(Utility.uidCurrentUser)){
-                            listStudentClass.add(modelStudentClass);
+                        if (modelStudentClass != null){
+                            modelStudentClass.setKey(dataSnapshot.getKey());
+                            Log.d("test",modelStudentClass.getTeacher() +" / "+ Utility.uidCurrentUser);
+                            if (modelStudentClass.getTeacher().equals(Utility.uidCurrentUser)){
+                                listStudentClass.add(modelStudentClass);
+                            }
                         }
+
                     }
                 }
                 Handler handler = new Handler();
@@ -78,7 +83,7 @@ public class ManageValueStudent extends AppCompatActivity {
                     }
                     adapterManageValueStudent = new AdapterManageValueStudent(ManageValueStudent.this, listStudentClass);
                     binding.recycleManageValueStudent.setAdapter(adapterManageValueStudent);
-                }, 500);
+                }, 1000);
 
             }
             @Override
