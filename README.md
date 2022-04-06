@@ -8,9 +8,10 @@ You can download and install the application demo <a href="https://play.google.c
 
 # Application Overview
 
+This app has 3 user roles.
+
 ### Role Users
 
-This app has 3 user roles.
 - Administrator (All access)
 - Teacher
 - Parent
