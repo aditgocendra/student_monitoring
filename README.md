@@ -52,7 +52,7 @@ This app has 3 user roles.
 - Create, Read, Update, Delete (CRUD) Value Student.
 
 
-### Parent
+## Parent
 
 ### Value Student
 - See the value of children from parents every day
